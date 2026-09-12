@@ -1,0 +1,13 @@
+Third-party libraries used in this project:
+
+1. qrcode.min.js
+   - Source: https://github.com/davidshimjs/qrcodejs
+   - License: MIT
+
+2. html5-qrcode.min.js
+   - Source: https://github.com/mebjas/html5-qrcode
+   - License: Apache-2.0
+
+3. tailwind.min.js
+   - Source: https://github.com/tailwindlabs/tailwindcss
+   - License: MIT

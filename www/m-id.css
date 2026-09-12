@@ -1,0 +1,258 @@
+/* VNS Mobile ID & Passport */
+#m-ids-main-container {
+    background-color: #f0fdfa !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+#m-id-form-screen,
+#m-id-view-screen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: #f9fdfd !important;
+    z-index: 99999 !important;
+    display: none;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+#m-id-form-screen:not(.hidden),
+#m-id-view-screen:not(.hidden) {
+    display: flex !important;
+}
+
+.m-id-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    outline: none;
+    background: rgba(13,148,136,0.06);
+    color: #0f172a;
+}
+.m-id-lbl {
+    display: block;
+    font-size: 10px;
+    font-weight: 900;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+}
+
+.m-id-card-shell {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.28);
+    display: flex;
+    flex-direction: column;
+}
+.m-id-card-face {
+    position: relative;
+    min-height: 150px;
+    padding: 16px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0;
+    background-size: cover;
+    background-position: center;
+}
+.m-id-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.m-id-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.25);
+    flex-shrink: 0;
+    padding: 3px;
+}
+
+.m-id-theme-passport { background: linear-gradient(135deg, #1e3a5f, #0f172a); }
+.m-id-theme-id { background: linear-gradient(135deg, #0D9488, #115e59); }
+.m-id-theme-res { background: linear-gradient(135deg, #4f46e5, #312e81); }
+.m-id-theme-driver { background: linear-gradient(135deg, #b45309, #78350f); }
+.m-id-theme-other { background: linear-gradient(135deg, #475569, #1e293b); }
+.m-id-theme-custom {
+    background-color: #0f172a;
+}
+.m-id-theme-custom::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15,23,42,0.15), rgba(15,23,42,0.45));
+    pointer-events: none;
+}
+.m-id-card-face > * { position: relative; z-index: 1; }
+
+.m-id-type-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.18);
+}
+.m-id-title { font-size: 15px; font-weight: 900; margin-top: 10px; }
+.m-id-number { font-size: 13px; font-family: ui-monospace, monospace; letter-spacing: 0.06em; margin-top: 4px; opacity: 0.95; }
+.m-id-card-foot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-top: 12px;
+}
+.m-id-exp-warn { color: #fde68a; font-weight: 900; }
+.m-id-expiring { box-shadow: 0 0 0 2px #f59e0b, 0 10px 25px -5px rgba(0,0,0,0.28); }
+
+.m-id-action-bar {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 10px;
+    background: rgba(13, 148, 136, 1);
+    z-index: 5;
+    flex-shrink: 0;
+}
+.m-id-action-bar button {
+    width: 32px; height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #1e293b;
+    cursor: pointer;
+    padding: 0;
+}
+.m-id-action-bar button:active { transform: scale(1.1); color: #fff; }
+.m-id-action-bar button[title="Trash"] { color: #fecaca; }
+.m-id-action-bar button svg { width: 15px; height: 15px; }
+
+.m-id-photo-thumb, .m-id-bg-thumb {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+}
+.m-id-logo-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    padding: 4px;
+}
+.m-id-color-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+.m-id-color-row input[type="color"] {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 2px;
+    background: #fff;
+    cursor: pointer;
+}
+.m-id-bg-mode-hint {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 700;
+}
+
+.m-id-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(15,23,42,0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.m-id-lightbox.open { display: flex; }
+.m-id-lightbox img {
+    max-width: 92vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #fff;
+}
+.m-id-lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+#m-id-items-container {
+    flex: 1 1 auto !important;
+    min-height: 180px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+#m-ids-main-container.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+}
+#m-id-form-screen.hidden,
+#m-id-view-screen.hidden {
+    display: none !important;
+}
+.m-id-select-wrap {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 30;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.m-id-outer.id-selected { outline: 2px solid #0D9488; outline-offset: 2px; }

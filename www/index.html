@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>vns vault</title>
+    <script src="tailwind.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=3.0">
+</head>
+
+
+<!----------------------------- END Test Animation----------------------------->
+<body class="overflow-hidden h-screen select-none" style="background-color: #C7F3EF; margin: 0; padding: 0;">
+<!--------------------- ANIMATION (STANDARD OVERLAY) ---------------------------------->
+    <!-- 🌟 VNS Diamond Pulse Loader (اصلاح‌شده برای موبایل) -->
+<div id="vns-app-loader" class="hidden">
+    <div class="vns-spinner-box">
+        <span class="vns-dot-node vns-dot-green"></span>
+        <span class="vns-dot-node vns-dot-white-right"></span>
+        <span class="vns-dot-node vns-dot-red"></span>
+        <span class="vns-dot-node vns-dot-white-left"></span>
+    </div>
+    <p id="vns-loader-text" class="vns-loader-caption">Securing Environment...</p>
+</div>
+<!--------------------------------ANIMATION--------------------------------------------->
+    <div id="auth-gate" class="fixed inset-0 bg-[#f0fdfa] z-[200] flex flex-col items-center justify-center p-4 overflow-y-auto select-none">
+        
+        <div class="absolute inset-0 pointer-events-none overflow-hidden select-none z-0 opacity-20">
+            <div class="absolute top-[8%] left-[6%] text-[#0D9488] w-16 h-16">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.6 1.48-1.55 2.72-2.91 2.84-3.41.02-.1-.01-.22-.12-.27-.1-.04-.26 0-.36.03-.14.04-2.4 1.54-6.8 4.5-.64.44-1.22.65-1.74.64-.57-.01-1.68-.32-2.5-.59-.99-.33-1.79-.5-1.72-1.07.03-.3.44-.6 1.21-.92 4.76-2.07 7.94-3.43 9.51-4.08 4.54-1.86 5.49-2.18 6.1-2.19.14 0 .44.03.63.19.16.13.21.32.23.45.02.1.04.38.02.61z"/></svg>
+            </div>
+            <div class="absolute bottom-[15%] right-[10%] text-[#0D9488] w-20 h-20">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.8c4.56-.93 8-4.96 8-9.8z"/></svg>
+            </div>
+        </div>
+<!---------------------------------STR NEW LOGO ACCRIVE--------------------------------->
+        <div id="register-card" class="bg-white p-7 rounded-[32px] shadow-2xl w-full max-w-[320px] border-2 border-[#f5b89a] hidden relative z-10 text-center">
+    
+    <!-- 🌟 هدر جدید داخل کارت ثبت‌نام -->
+    <div class="flex flex-col items-center justify-center mb-5 select-none">
+        <div class="w-12 h-12 bg-teal-50/80 rounded-2xl flex items-center justify-center mb-2 border border-teal-200">
+            <img src="vnsgroup.ico" class="w-8 h-8 object-contain" onerror="this.src='vnsgroup.png'">
+        </div>
+        <span class="text-xs font-black text-[#0D9488] tracking-widest uppercase font-sans">VNS GROUP LIMITED</span>
+    </div>
+
+    <h1 class="text-xl font-extrabold text-[#0f766e] mb-5" data-i18n="reg_title">Register Vault</h1>
+<!---------------------------------END NEW LOGO ACCRIVE--------------------------------->
+            <div class="space-y-3.5 text-left">
+                <div>
+                    <input type="text" id="reg-user" data-i18n="reg_user_ph" placeholder="Vault Username" oninput="validateEnglish(this)" class="auth-input-field">
+                </div>
+                <div>
+                    <div class="relative">
+                        <input type="password" id="reg-pass" data-i18n="reg_pass_ph" placeholder="Master Password" oninput="validateEnglish(this); checkRegPasswordStrength();" class="auth-input-field">
+                        <button onclick="toggleRegisterPass('reg-pass', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 hover:opacity-100 transition">
+                            <svg class="w-4 h-4 toggle-eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <div id="reg-pass-strength-wrapper" class="hidden mt-2.5 px-1">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[9px] font-bold text-slate-500 uppercase" data-i18n="reg_strength">Vault Strength:</span>
+                            <span id="strength-label" class="text-[9px] font-bold text-red-500 uppercase" data-i18n="pass_weak">WEAK</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-white/80 rounded-full overflow-hidden border border-teal-200/40">
+                            <div id="strength-indicator-bar" class="h-full w-0 bg-red-500 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="reg-pass-checklist" class="mt-2 text-[10px] space-y-1 bg-white/60 p-3 rounded-2xl border border-[#f5b89a] hidden font-bold">
+                        <div id="check-len" class="text-red-500 flex items-center gap-1.5"><span class="indicator-dot w-1.5 h-1.5 rounded-full bg-red-500"></span> <span data-i18n="reg_len">Total Length (8-16)</span></div>
+                        <div id="check-upper" class="text-red-500 flex items-center gap-1.5"><span class="indicator-dot w-1.5 h-1.5 rounded-full bg-red-500"></span> <span data-i18n="reg_upper">Capital Letters (A-Z)</span></div>
+                        <div id="check-lower" class="text-red-500 flex items-center gap-1.5"><span class="indicator-dot w-1.5 h-1.5 rounded-full bg-red-500"></span> <span data-i18n="reg_lower">Lower Letters (a-z)</span></div>
+                        <div id="check-num" class="text-red-500 flex items-center gap-1.5"><span class="indicator-dot w-1.5 h-1.5 rounded-full bg-red-500"></span> <span data-i18n="reg_num">Numeric Digit (0-9)</span></div>
+                        <div id="check-spec" class="text-red-500 flex items-center gap-1.5"><span class="indicator-dot w-1.5 h-1.5 rounded-full bg-red-500"></span> <span data-i18n="reg_spec">Special Characters</span></div>
+                        <div id="check-repeat" class="text-red-500 flex items-center gap-1.5"><span class="indicator-dot w-1.5 h-1.5 rounded-full bg-red-500"></span> <span data-i18n="reg_rep">Max 2 Consec. Reps</span></div>
+                    </div>
+                </div>
+                <div>
+                    <input type="password" id="reg-confirm-pass" data-i18n="reg_confirm_ph" placeholder="Confirm Password" oninput="validateEnglish(this)" class="auth-input-field">
+                </div>
+
+                <div class="pt-1">
+                    <button onclick="handleRegisterStep1()" class="w-full bg-[#0D9488] hover:bg-[#0f766e] text-white py-2.5 px-4 rounded-full font-bold shadow-lg transition-all uppercase tracking-wider text-xs" data-i18n="reg_btn">Register Vault</button>
+                </div>
+                
+                <div class="text-center pt-2.5 border-t border-[#f5b89a]">
+                    <button type="button" id="reg-return-login-btn" onclick="toggleToLogin()" class="hidden text-xs text-[#0f766e] font-bold hover:underline block mx-auto border-none bg-transparent cursor-pointer outline-none" style="display:none" data-i18n="reg_return_login">Return to Access Login</button>
+                </div>
+                
+
+<!-----------------------------------STR Lang add----------------------------------->
+<div class="relative w-full mb-3">
+    <select id="reg-lang-selector"
+        onchange="changeLanguage(this.value)"
+        class="w-full bg-teal-50/50 hover:bg-teal-50 border border-teal-200 text-teal-900 rounded-xl py-3 text-xs font-black outline-none tracking-wider cursor-pointer appearance-none transition-all shadow-sm focus:border-[#0D9488] focus:bg-white">
+        <option value="en">English</option>
+        <option value="fa">فارسی</option>
+        <option value="ar">العربية</option>
+        <option value="zh">中文</option>
+    </select>
+    <div class="lang-arrow absolute top-1/2 -translate-y-1/2 right-3 flex items-center pointer-events-none text-teal-600">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+    </div>
+</div>
+<!-----------------------------------END Lang add----------------------------------->
+            </div>
+        </div>
+        <div id="register-2fa-card" class="bg-white p-7 rounded-[32px] shadow-2xl w-full max-w-[320px] border-2 border-[#f5b89a] hidden relative z-10 text-center">
+            <h1 class="text-lg font-extrabold text-[#0f766e] mb-3" data-i18n="two_step_title">Two-Step Security</h1>
+            <p class="text-[11px] text-slate-600 mb-3 leading-relaxed font-semibold" data-i18n="two_step_desc">Save this secret key into standard Google Authenticator:</p>
+            <div class="space-y-3.5">
+                <div class="flex items-center justify-between bg-white/80 px-4 py-2.5 rounded-full border border-[#f5b89a]">
+                    <span id="reg-2fa-key" class="font-mono text-xs font-bold text-slate-700 truncate pr-2 select-all" data-i18n="two_step_gen">GENERATING SECRET...</span>
+                    <button onclick="copyValueText('reg-2fa-key')" class="text-[#0D9488] hover:text-[#0f766e] transition text-xs font-black flex-shrink-0" data-i18n="btn_copy">COPY</button>
+                </div>
+                
+                <div class="bg-white/50 p-3 rounded-2xl border border-[#f5b89a]/50 flex items-center justify-between text-left">
+                    <div>
+                        <span class="text-[9px] font-black text-slate-500 block uppercase" data-i18n="two_step_sim">Live Sync Token Simulator:</span>
+                        <span id="reg-2fa-sim-code" class="text-lg font-mono font-black text-[#0D9488] tracking-widest">------</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] font-bold text-slate-500 block" data-i18n="two_step_cycle">Cycle:</span>
+                        <span id="reg-2fa-timer" class="text-xs font-bold text-slate-700 font-mono">30s</span>
+                    </div>
+                </div>
+
+                <div>
+                    <input type="text" id="reg-2fa-verify" data-i18n="two_step_code_ph" placeholder="6-digit Authenticator Code" class="auth-input-field tracking-widest font-mono text-base font-bold" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="if(event.key === 'Enter') handleRegisterComplete()">
+                </div>
+
+                <div class="pt-1 flex gap-2.5">
+                    <button onclick="handleRegisterComplete()" class="flex-1 bg-[#0D9488] hover:bg-[#0f766e] text-white py-2.5 rounded-full font-bold shadow-md transition-all text-xs uppercase tracking-wide" data-i18n="two_step_verify">Verify &amp;amp; Next</button>
+                    <button onclick="backToStep1()" class="px-4 bg-white/80 text-slate-700 py-2.5 rounded-full font-bold hover:bg-white transition-all text-xs uppercase" data-i18n="btn_back">Back</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="register-mnemonic-card" class="bg-white p-7 rounded-[32px] shadow-2xl w-full max-w-[340px] border-2 border-[#f5b89a] hidden relative z-10 text-center">
+            <h1 class="text-base font-extrabold text-[#0f766e] mb-3" data-i18n="phrase_title">Save Secure Recovery Phrase</h1>
+            <p class="text-[11px] text-slate-600 mb-3 leading-relaxed font-medium" data-i18n="phrase_desc">Write down these 12 words sequence. Necessary to restore backups on alternate devices. It cannot be shown again!</p>
+            
+            <div id="register-mnemonic-container" class="grid grid-cols-2 gap-2 bg-white/60 p-3 rounded-2xl border border-[#f5b89a] text-left font-mono font-bold text-[11px] text-slate-700 mb-4 select-all">
+            </div>
+
+            <div class="space-y-2.5">
+                <button onclick="copyRegisterMnemonic()" class="w-full py-2 bg-teal-100 hover:bg-teal-200 text-vns border border-teal-200 rounded-xl text-xs font-bold transition uppercase tracking-wide" data-i18n="phrase_copy">Copy Phrase Words</button>
+                <button onclick="confirmMnemonicWritten()" class="w-full bg-[#0D9488] hover:bg-[#0f766e] text-white py-2.5 rounded-full font-bold shadow-md transition-all text-xs uppercase tracking-wide" data-i18n="phrase_stored">Words Stored Securely</button>
+            </div>
+        </div>
+<!--------------------------------STR NEW LOGO ACCTIVE 2-------------------------------->
+        <div id="login-card" class="bg-white p-7 rounded-[32px] shadow-2xl w-full max-w-[320px] border border-[#f5b89a] relative z-10 text-center">
+    
+    <!-- 🌟 هدر جدید داخل کارت لاگین -->
+    <div class="flex flex-col items-center justify-center mb-4 select-none">
+        <div class="w-12 h-12 bg-teal-50/80 rounded-2xl flex items-center justify-center mb-2 border border-teal-200">
+            <img id="login-brand-logo" src="vnsgroup.ico" class="w-8 h-8 object-contain" onerror="this.src='vnsgroup.png'">
+        </div>
+        <span class="text-xs font-black text-[#0D9488] tracking-widest uppercase font-sans">VNS GROUP LIMITED</span>
+    </div>
+
+    <h1 class="text-lg font-bold text-slate-800 mb-5" data-i18n="login_title">Login Unlock Account</h1>
+<!--------------------------------END NEW LOGO ACCTIVE 2-------------------------------->
+            <div class="space-y-3.5">
+                <div id="login-user-container">
+                    <input type="text" id="login-user" class="auth-input-field" data-i18n="login_user_ph" oninput="validateEnglish(this)" onkeydown="handleLoginOnEnter(event)" placeholder="Vault Username">
+                </div>
+
+                <div id="login-remember-container" class="flex items-center justify-start pl-3">
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="login-remember" class="accent-[#0D9488] w-4 h-4 rounded">
+                        <span class="text-xs font-semibold text-slate-700" data-i18n="login_remember">Remember Vault Username</span>
+                    </label>
+                </div>
+
+                <div id="login-pass-container" class="relative">
+                    <input type="password" id="login-pass" class="auth-input-field" data-i18n="login_pass_ph" oninput="validateEnglish(this)" onkeydown="handleLoginOnEnter(event)" placeholder="Master Password">
+                    <button onclick="toggleRegisterPass('login-pass', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 hover:opacity-100 transition">
+                        <svg class="w-4 h-4 toggle-eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="login-passcode-container" class="hidden space-y-1.5">
+                    <label class="block text-xs font-bold text-slate-700 text-left uppercase pl-1 tracking-wider" data-i18n="login_pin_lbl">Quick Bypass PIN:</label>
+                    <div class="relative">
+                        <input type="password" id="login-passcode" class="auth-input-field pr-12 tracking-widest font-mono text-center text-base font-black" maxlength="6" placeholder="******" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="handleLoginOnEnter(event)">
+                        <button onclick="togglePasscodeVisibility('login-passcode', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 hover:opacity-100 transition">
+                            <svg class="w-4 h-4 toggle-eye-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="login-2fa-container" class="hidden pt-1 space-y-1.5">
+                    <label class="block text-xs font-bold text-slate-700 text-left uppercase pl-1 tracking-wider" data-i18n="login_totp_lbl">TOTP Token Code:</label>
+                    <input type="text" id="login-2fa-code" data-i18n="login_totp_ph" placeholder="6-digit Token" class="auth-input-field tracking-widest font-mono text-base font-bold" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="handleLoginOnEnter(event)">
+                </div>
+
+                <div class="pt-2">
+                    <button id="login-submit-btn" onclick="handleLogin()" class="w-full bg-[#0D9488] hover:bg-[#0f766e] text-white font-bold py-2.5 rounded-full border border-teal-400 shadow-lg transition-all text-xs uppercase tracking-wider">
+                        <span class="md:hidden" data-i18n="login_btn_mobile">Unlock Vault</span>
+                        <span class="hidden md:inline" data-i18n="login_btn">Unlock Secure Vault Partition</span>
+                    </button>
+                </div>
+
+                <div class="pt-1" id="biometric-login-container">
+                    <button type="button" onclick="handleBiometricLogin()" class="w-full bg-white hover:bg-slate-50 text-slate-700 font-bold py-2.5 rounded-xl border border-slate-200 shadow-sm transition-all text-[10px] md:text-xs uppercase tracking-wider flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 009 11a5 5 0 1110 0c0 1.02-.109 2.018-.32 2.982m-1.84 2.32a13.96 13.96 0 01-1.9 1.816M4.516 17.51C3.557 16.14 3 14.484 3 12.7c0-2.438.977-4.649 2.56-6.26M15 12h.008v.008H15V12zm.5 0a.5.5 0 11-1 0 .5.5 0 011 0z" />
+                        </svg>
+                        <span class="md:hidden" data-i18n="login_bio_mobile">Hardware Biometric</span>
+                        <span class="hidden md:inline" data-i18n="login_bio">Native Hardware Biometric Unlock</span>
+                    </button>
+                </div>
+                <!--STR LOGING LANG-->
+<div class="relative w-full mb-3">
+    <select id="login-lang-selector"
+        onchange="changeLanguage(this.value)"
+        class="w-full bg-teal-50/50 hover:bg-teal-50 border border-teal-200 text-teal-900 rounded-xl py-3 text-xs font-black outline-none tracking-wider cursor-pointer appearance-none transition-all shadow-sm focus:border-[#0D9488] focus:bg-white">
+        <option value="en">English</option>
+        <option value="fa">فارسی</option>
+        <option value="ar">العربية</option>
+        <option value="zh">中文</option>
+    </select>
+    <div class="lang-arrow absolute top-1/2 -translate-y-1/2 right-3 flex items-center pointer-events-none text-teal-600">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+    </div>
+</div>
+<!--END LOGING LANG-->
+            </div>
+        </div>
+
+        <div id="auth-footer-links" class="mt-6 text-center max-w-[320px] w-full px-2 font-sans select-none z-10">
+            <p class="text-red-600 text-[10px] md:text-xs font-bold leading-relaxed tracking-wide" data-i18n="recov_warning">If you lose your master credentials, account cannot be recovered by VNS network.</p>
+            
+            <button type="button" id="auth-recovery-btn" onclick="showRecoveryDashboard()" class="hidden text-amber-600 text-[10px] md:text-[11px] font-bold hover:underline mt-4 block mx-auto tracking-wide bg-transparent border-none outline-none cursor-pointer uppercase" style="display:none">
+                <span class="md:hidden" data-i18n="recov_btn_mobile">Forgot Password? (Recovery)</span>
+                <span class="hidden md:inline" data-i18n="recov_btn_desk">Initialize Security Recovery Module</span>
+            </button>
+            
+            <button type="button" onclick="toggleToRegister()" id="reg-redirect-btn" class="hidden text-[#0f766e] text-[10px] md:text-[11px] font-black hover:underline mt-2 block mx-auto tracking-wide bg-transparent border-none outline-none cursor-pointer uppercase" style="display:none">
+                <span class="md:hidden" data-i18n="reg_btn_mobile">Create New Account</span>
+                <span class="hidden md:inline" data-i18n="reg_btn_desk">Establish Alternative New Account Storage</span>
+            </button>
+        </div>
+       <!-- ==========================================================================
+     MODIFIED: RECOVERY CARD STATIC (index.html)
+     ========================================================================== -->
+<div id="recovery-card" class="bg-white p-7 rounded-[32px] shadow-2xl w-full max-w-[320px] border border-[#f5b89a] hidden relative z-10 text-center">
+    <h1 class="text-lg font-bold text-[#0f766e] mb-4 uppercase tracking-wider">Security Recovery</h1>
+    <p class="text-[10px] text-slate-500 font-semibold mb-5 px-2">Select your issue below to proceed with the correct recovery process.</p>
+    
+    <div id="recovery-methods-buttons" class="space-y-3">
+        <button type="button" onclick="window.recoveryMethod('master')" class="w-full flex flex-col items-center justify-center gap-0.5 bg-teal-50 hover:bg-teal-100 text-[#0D9488] py-2.5 rounded-xl border border-teal-200 transition-all shadow-sm cursor-pointer border-none outline-none">
+            <span class="text-[11px] font-black uppercase tracking-widest">Bypass 2FA / PIN</span>
+        </button>
+        <button type="button" onclick="window.recoveryMethod('phrase')" class="w-full flex flex-col items-center justify-center gap-0.5 bg-[#0D9488] hover:bg-[#0f766e] text-white py-2.5 rounded-xl border border-teal-400 transition-all shadow-md cursor-pointer border-none outline-none">
+            <span class="text-[11px] font-black uppercase tracking-widest">Reset Master Password</span>
+        </button>
+    </div>
+
+    <div id="recovery-input-section" class="space-y-3 mt-4 text-left hidden">
+        <div id="recovery-dynamic-field-wrapper"></div>
+    </div>
+    
+    <div id="recovery-new-password-fields" class="space-y-3 mt-4 text-left hidden">
+        <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider pl-1 mb-1">New Master Password</label>
+            <input type="password" id="rec-new-pass" class="auth-input-field" placeholder="Enter new master password">
+        </div>
+        <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider pl-1 mb-1">Confirm Password</label>
+            <input type="password" id="rec-confirm-pass" class="auth-input-field" placeholder="Confirm new master password">
+        </div>
+        <button type="button" onclick="window.executePasswordReset()" class="w-full mt-4 bg-[#0D9488] hover:bg-[#0f766e] text-white font-black py-3 rounded-xl transition-all text-xs uppercase tracking-widest shadow-md border-none cursor-pointer">
+            Save &amp; Change
+        </button>
+    </div>
+    
+    <div class="text-center pt-4 mt-4 border-t border-[#f5b89a]/50">
+        <button type="button" onclick="toggleToLogin()" class="text-xs text-[#0f766e] font-bold hover:underline block mx-auto border-none bg-transparent cursor-pointer outline-none">Cancel &amp; Return</button>
+    </div>
+</div>
+       
+    </div> <!-- End of auth-gate -->
+
+    <div id="folder-link-gate" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[250] flex items-center justify-center p-4 hidden">
+        <div class="bg-white p-6 sm:p-9 rounded-[36px] shadow-2xl w-[480px] max-w-full border border-slate-100 text-center">
+            <div class="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-[#0D9488]">
+                <img src="vnsgroup.ico" class="w-12 h-12 object-contain mx-auto" onerror="this.src='vnsgroup.png'">
+            </div>
+            <h2 class="text-lg md:text-xl font-black text-slate-800 tracking-tight uppercase">
+                <span class="md:hidden" data-i18n="mount_title_mobile">Mount Vault Path</span>
+                <span class="hidden md:inline" data-i18n="mount_title_desk">Mount Cryptographic Partition Address</span>
+            </h2>
+            <p class="text-[10px] md:text-xs text-slate-500 leading-relaxed my-3 font-semibold" data-i18n="mount_desc">
+                To guarantee zero-cache local sandbox parameters, provide the local directory file pathway or securely connected external device node route where the cipher storage payload will sync.
+            </p>
+
+            <div class="bg-teal-50/60 border border-teal-100 p-3.5 rounded-2xl text-left my-4 shadow-inner">
+                <p class="text-[10px] text-[#0D9488] font-black mb-1 uppercase tracking-widest" data-i18n="mount_notice_title">Browser Sandbox Security Notice</p>
+                <p class="text-[9px] md:text-[10px] text-slate-600 leading-relaxed font-medium">
+                    <span data-i18n="mount_notice_p1">Triggering local filesystem route sync initializes system protocols. Browser security modules might prompt directory synchronization authorizations. </span><strong data-i18n="mount_notice_p2">No cloud transfers execute; absolute client-side parameters isolate operations.</strong>
+                </p>
+            </div>
+
+            <div class="space-y-4 text-left mb-6">
+                <div>
+                    <label class="form-label !text-[9px] md:!text-[10px]" data-i18n="mount_path_lbl">Secure External Storage Database Pathway:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="manual-path-input" data-i18n="mount_path_ph" placeholder="e.g., C:\VNS_Vault" class="form-input font-mono text-xs flex-1 border-slate-300 font-bold" onkeydown="if(event.key === 'Enter') executeManualPathLink()">
+                        <button onclick="triggerFolderPicker()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 md:px-4 rounded-xl border border-slate-200 text-[10px] md:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap" data-i18n="mount_btn_select">
+                            Select Route
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="executeManualPathLink()" class="w-full bg-vns text-white py-3 md:py-3.5 rounded-xl font-black shadow-lg shadow-teal-100 hover:brightness-105 active:scale-95 transition-all text-xs uppercase tracking-widest">
+                    <span class="md:hidden" data-i18n="mount_confirm_mobile">Confirm Route</span>
+                    <span class="hidden md:inline" data-i18n="mount_confirm_desk">Confirm Sync Route Node</span>
+                </button>
+            </div>
+        </div>
+    </div> <!-- End of folder-link-gate -->
+
+    <!-- ============================================== -->
+    <!-- MAIN DASHBOARD APPLICATION CONTAINER (FLEX)    -->
+    <!-- ============================================== -->
+    <div id="app-container" class="h-full flex flex-col hidden">
+        
+        <header class="app-header flex items-center justify-between px-3 sm:px-6 text-white flex-shrink-0 w-full relative z-[100]">
+            <div class="flex items-center gap-2 py-2 min-w-0">
+                <button onclick="toggleMobileSidebar(event)" class="lg:hidden p-1.5 text-white hover:bg-white/10 rounded-xl transition-all flex-shrink-0 border-none outline-none bg-transparent cursor-pointer">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <img src="vnsgroup.ico" class="w-6 h-6 object-contain hidden sm:block" onerror="this.style.display='none'">
+                <span class="text-sm sm:text-base font-black tracking-widest uppercase font-mono truncate" data-i18n="app_title">vns vault</span>
+            </div>
+
+            <div class="flex items-center gap-2 flex-shrink-0 relative">
+                <div id="profile-dropdown-container" class="relative flex items-center cursor-pointer py-1">
+                    <button onclick="toggleProfileDropdown(event)" class="flex items-center gap-1.5 px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-xl transition-all border-none outline-none text-white cursor-pointer">
+                        <span class="text-xs font-black text-white/95 uppercase tracking-wide truncate max-w-[80px]" id="display-user">vns_user</span>
+                        <svg class="w-3.5 h-3.5 text-white/70 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div id="profile-dropdown-menu" class="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-slate-100 hidden z-[500] overflow-hidden transform origin-top-right transition-all">
+                        <div class="p-1.5">
+                            <button onclick="initializeMobileScanner(); closeProfileDropdown();" class="w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:text-[#0D9488] hover:bg-teal-50 rounded-xl text-[11px] font-black uppercase tracking-wide transition-all text-left border-none outline-none cursor-pointer">
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8V5a2 2 0 012-2h3m10 3V5a2 2 0 00-2-2h-3m-3 10v3a2 2 0 002 2h3m-10-3v3a2 2 0 002 2h3m-3-10v.01M12 12v.01M16 12v.01M12 16v.01M16 16v.01M8 12v.01M8 16v.01" />
+                                </svg>
+                                <span data-i18n="top_scan_qr">Scan QR</span>
+                            </button>
+
+                            <button onclick="openMyAccountSettings(event)" class="w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:text-[#0D9488] hover:bg-teal-50 rounded-xl text-[11px] font-black uppercase tracking-wide transition-all text-left border-none outline-none cursor-pointer">
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1 -6 0 3 3 0 0 1 6 0z" />
+                                </svg>
+                                <span data-i18n="top_settings">Settings</span>
+                            </button>
+
+                            <button onclick="runHealthCheck(); closeProfileDropdown();" class="w-full flex items-center gap-3 px-3 py-2.5 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 rounded-xl text-[11px] font-black uppercase tracking-wide transition-all text-left border-none outline-none cursor-pointer">
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span data-i18n="top_health">Health Scan</span>
+                            </button>
+
+                            <div class="h-px bg-slate-100 my-1"></div>
+
+                            <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-red-500 hover:bg-red-50 rounded-xl text-[11px] font-black uppercase tracking-wide transition-all text-left border-none outline-none cursor-pointer">
+                                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                <span data-i18n="top_logout">Log Out</span>
+                            </button>
+                            
+                            <div class="h-px bg-slate-100 my-1"></div>
+                            <div id="mounted-banner" class="w-full flex flex-col items-start px-3 py-2 text-slate-400 text-[9px] font-black uppercase tracking-widest bg-slate-50 rounded-xl mt-1 border border-slate-100 cursor-default">
+                                <div class="flex items-center gap-1.5 mb-1 text-green-500">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                    <span data-i18n="active_mount_path">Active Mount Path:</span>
+                                </div>
+                                <span id="mounted-folder-name" class="font-mono tracking-wider break-all text-slate-600" data-i18n="mount_none">NONE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[45] hidden lg:hidden" onclick="closeMobileSidebar()"></div>
+
+        <!-- 🌟 THE CRITICAL PARENT FLEX WRAPPER 🌟 -->
+        <div class="flex-1 flex overflow-hidden relative">
+            
+            <aside id="sidebar-container" class="sidebar-width bg-vns flex flex-col pt-[85px] pb-6 lg:py-6 sidebar-stepped overflow-y-auto fixed lg:static inset-y-0 left-0 z-[50] transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+                <nav class="flex-1 flex flex-col justify-between h-full pb-4">
+                    <div>
+                        <div class="sidebar-item active" onclick="setCategory('home', this); cancelView();"><span data-i18n="menu_home">Home Dashboard</span></div>
+                        <div class="sidebar-item" onclick="setCategory('all', this)" ondragover="allowDrop(event)" ondrop="dropToCategory(event, 'all')" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"><span data-i18n="menu_all">All Vault Items</span></div>
+                        <div class="sidebar-item" onclick="setCategory('fav', this)" ondragover="allowDrop(event)" ondrop="dropToCategory(event, 'fav')" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"><span data-i18n="menu_fav">Favorites</span></div>
+                        <div class="sidebar-item" onclick="setCategory('pass', this)" ondragover="allowDrop(event)" ondrop="dropToCategory(event, 'pass')" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"><span data-i18n="menu_pass">Credentials</span></div>
+                        
+                        <!-- PAYMENT CARDS TRIGGER -->
+                        <div id="m-sidebar-cards-trigger" onclick="mSetMobileCardsCategory(this)" class="sidebar-item flex items-center gap-2 transition-all cursor-pointer" style="background-color: #CCFF00; color: #0f172a; font-weight: 900; border-radius: 14px; margin: 4px 8px;">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+                                <path d="M3 10h18"></path>
+                            </svg>
+                            <span data-i18n="cards_main_title">Payment Cards</span>
+                        </div>
+
+                        <div id="m-sidebar-ids-trigger" onclick="mSetMobileIdsCategory(this)" class="sidebar-item flex items-center gap-2 transition-all cursor-pointer" style="background-color: #A5F3FC; color: #0f172a; font-weight: 900; border-radius: 14px; margin: 4px 8px;">
+                            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
+                            <span data-i18n="html_lbl_id_passport">ID &amp; Passport</span>
+                        </div>
+                        
+                        <div class="sidebar-item" onclick="setCategory('arch', this)" ondragover="allowDrop(event)" ondrop="dropToCategory(event, 'arch')" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"><span data-i18n="menu_arch">Archive Index</span></div>
+                        <div class="sidebar-item" onclick="setCategory('trash', this)" ondragover="allowDrop(event)" ondrop="dropToCategory(event, 'trash')" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)"><span data-i18n="menu_trash">Trash Bin</span></div>
+                        
+                        <div class="sidebar-item mt-4" onclick="toggleFolderList(event)">
+                            <div class="flex items-center gap-2">
+                                <svg id="folder-arrow" class="w-3 h-3 transition-transform text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                                    <path d="M19 9l-7 7-7-7" />
+                                </svg>
+                                <span data-i18n="menu_folders">Storage Folders</span>
+                            </div>
+                            <svg onclick="promptCreateFolder(event)" class="w-4 h-4 hover:scale-125 cursor-pointer text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                                <path d="M12 4v16m8-8H4" />
+                            </svg>
+                        </div>
+                        <div id="folder-list-container" class="hidden"></div>
+                    </div>
+
+                    <div class="mt-8 px-4 flex flex-col gap-3">
+                        <button onclick="showPolicy()" class="text-left text-[10px] text-teal-100 hover:text-white font-black uppercase tracking-widest transition-all border-none outline-none bg-transparent cursor-pointer" data-i18n="menu_policy">Rules &amp; Policy</button>
+                        <div class="text-[10px] text-teal-200/50 font-mono font-black tracking-widest" data-i18n="pro">Pro</div>
+                    </div>
+                </nav>
+            </aside>
+            
+            <section id="list-section" class="list-width list-stepped flex flex-col bg-slate-50/30 border-r border-slate-100 w-full lg:w-[300px]">
+                <div class="p-5 border-b border-slate-100 bg-white flex flex-col gap-2">
+                    <div class="flex justify-between items-center w-full">
+                        <h2 class="font-black text-sm text-slate-700 uppercase tracking-wider" data-i18n="list_header">Credentials Registry</h2>
+                        <button onclick="showAddForm()" class="w-9 h-9 rounded-xl bg-vns text-white flex items-center justify-center hover:scale-110 active:scale-95 transition shadow-lg shadow-teal-500/20 border-none outline-none cursor-pointer">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                                <path d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-wide" data-i18n="list_cat_label">Category:</span>
+                        <span id="active-category-title" class="text-xs font-black text-[#0D9488] uppercase tracking-wider" data-i18n="active_cat_home">HOME DASHBOARD</span>
+                    </div>
+
+                    <div class="relative mt-1.5">
+                        <input type="text" id="global-search" oninput="handleGlobalSearch(this.value)" data-i18n="search_placeholder" placeholder="Search vault items..." class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold bg-slate-50 outline-none focus:border-[#0D9488] focus:bg-white transition-all text-left">
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="item-list" class="flex-1 overflow-y-auto py-2 no-scrollbar"></div>
+            </section>
+
+            <main id="main-section" class="flex-1 h-full overflow-y-auto main-content bg-slate-50 relative w-full pb-24 lg:pb-12">
+                
+                <div id="view-placeholder" class="p-4 sm:p-6 w-full h-full flex flex-col items-center justify-center">
+                    <div class="glass-panel p-9 rounded-[40px] flex flex-col items-center justify-center max-w-sm w-full animate-float select-none text-center border border-teal-100 shadow-xl shadow-teal-500/10">
+                        <div class="w-24 h-24 mb-5 flex items-center justify-center bg-white rounded-3xl border border-teal-100 p-2 shadow-inner">
+                            <img src="vnsgroup.ico" alt="VNS Logo" class="w-full h-full object-contain drop-shadow-xl" onerror="this.src='vnsgroup.png'; this.onerror=null;">
+                        </div>
+                        <h2 class="text-xl font-black text-slate-800 tracking-wide uppercase mb-0.5" data-i18n="dash_title">VNS Secure Dashboard</h2>
+                        <p class="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-4" data-i18n="dash_sub">VNS GROUP LIMITED</p>
+                        <div class="flex items-center gap-2 px-4 py-1.5 bg-green-500/10 rounded-full border border-green-500/20 text-green-600 font-black text-[10px] uppercase tracking-wider">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span data-i18n="dash_status">Storage Partition Online &amp; Decrypted</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-container" class="hidden p-5 sm:p-12 pb-24 sm:pb-12 max-w-3xl mx-auto w-full mt-[80px] lg:mt-0">
+                    <div class="flex items-center justify-between mb-6 sm:mb-8">
+                        <div class="flex items-center gap-4">
+                            <button onclick="cancelView()" class="lg:hidden p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all border-none outline-none cursor-pointer">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <div class="relative group">
+                                <div id="form-logo-preview" onclick="triggerCustomLogoUpload()" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-teal-50 border-2 border-dashed border-teal-300 flex items-center justify-center text-vns cursor-pointer overflow-hidden hover:border-vns hover:bg-teal-100/40 transition-all shadow-md group" title="Click to synchronize unique local custom branding logo">
+                                    <svg class="w-7 h-7 sm:w-8 sm:h-8 text-[#0D9488]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <button id="btn-delete-logo" onclick="removeCustomLogo(event)" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-black border border-white hover:bg-red-600 transition shadow hidden border-none cursor-pointer" title="Remove custom uploaded logotype entity data">x</button>
+                            </div>
+                            <input type="file" id="form-logo-input" class="hidden" accept="image/*" onchange="handleCustomLogoUpload(event)">
+                            <h2 id="header-title" class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight uppercase" data-i18n="form_title_add">Append Security Item</h2>
+                        </div>
+                        
+                        <button onclick="cancelView()" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer border-none bg-transparent" title="Close Panel">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="fields-stack">
+                        <label class="form-label" data-i18n="form_lbl_name">Identified Item Label Title Name:</label>
+                        <div class="input-group">
+                            <input type="text" id="i-name" class="form-input text-sm md:text-[13px] bg-teal-50 border border-teal-400 text-teal-900 focus:bg-white focus:border-teal-600 transition-colors" oninput="handleNameInput(this.value)" onkeydown="handleSaveOnEnter(event)">
+                        </div>
+                        
+                        <label class="form-label" data-i18n="form_lbl_folder">Assigned Folders Classification node:</label>
+                        <div class="input-group">
+                            <input type="text" id="i-folder" data-i18n="form_folder_ph" class="form-input font-bold text-teal-900 cursor-pointer text-sm md:text-[13px] bg-teal-50 border border-teal-400 focus:bg-white focus:border-teal-600 transition-colors" readonly onclick="toggleFolderDropdown(event)" placeholder="(No Target Folder Container)" onkeydown="handleSaveOnEnter(event)">
+                            
+                            <div id="folder-dropdown" class="dropdown-menu !top-full !w-full !left-0 mt-1"></div>
+                        </div>
+                        
+                        <label class="form-label" data-i18n="form_lbl_user">Username Account Tag Address (English AlphaNumeric):</label>
+                        <div class="input-group">
+                            <input type="text" id="i-user" class="form-input pr-12 font-semibold text-sm md:text-[13px] bg-teal-50 border border-teal-400 text-teal-900 focus:bg-white focus:border-teal-600 transition-colors" oninput="validateEnglish(this)" onkeydown="handleSaveOnEnter(event)">
+                            
+                            <div class="field-actions">
+                                <svg class="svg-icon" onclick="copyValue('i-user')" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <label class="form-label" data-i18n="form_lbl_pass">Security String Passkey Sequence (English AlphaNumeric Only):</label>
+                        <div class="input-group relative flex flex-col">
+                            <input type="password" id="i-pass" class="form-input pr-24 font-mono tracking-widest font-bold text-sm md:text-[13px] bg-teal-50 border border-teal-400 text-teal-900 focus:bg-white focus:border-teal-600 transition-colors" oninput="validateEnglish(this); checkRealTimePasswordStatus(this.value);" onkeydown="handleSaveOnEnter(event)">
+                                
+                            <div class="field-actions">
+                                <svg class="svg-icon" id="form-eye-icon" onclick="togglePass()" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="svg-icon" id="gen-trigger-btn" onclick="openGen()" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                                <svg class="svg-icon" onclick="copyValue('i-pass')" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-2 px-1 h-4 w-full">
+                                <div id="item-strength-indicator" class="hidden items-center gap-1.5 transition-all">
+                                    <div id="item-dot-red" class="w-2 h-2 rounded-full bg-slate-200 transition-colors duration-300"></div>
+                                    <div id="item-dot-yellow" class="w-2 h-2 rounded-full bg-slate-200 transition-colors duration-300"></div>
+                                    <div id="item-dot-green" class="w-2 h-2 rounded-full bg-slate-200 transition-colors duration-300"></div>
+                                    <span id="item-strength-text" class="text-[9px] font-black text-slate-400 ml-1 uppercase tracking-widest"></span>
+                                </div>
+                                
+                                <div id="item-reuse-warning" class="hidden items-center gap-1 text-red-500 transition-all">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                    <span class="text-[9px] font-black uppercase tracking-widest" data-i18n="form_reuse_pass">Reused Password</span>
+                                </div>
+                            </div>
+                        </div> 
+                        
+                        <label class="form-label" data-i18n="form_lbl_payload_type">Data Payload Type:</label>
+                        <div class="input-group flex gap-4 mb-3">
+                            <label class="flex items-center gap-2 cursor-pointer text-[10px] md:text-xs font-bold text-slate-600">
+                                <input type="radio" name="payload-type" value="backup" checked onchange="switchPayloadField('backup')" class="accent-[#0D9488]">
+                                <span data-i18n="form_payload_backup">Mnemonic Backup Tokens</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer text-[10px] md:text-xs font-bold text-slate-600">
+                                <input type="radio" name="payload-type" value="ssh" onchange="switchPayloadField('ssh')" class="accent-[#0D9488]">
+                                <span data-i18n="form_payload_ssh">Secure SSH Key (RSA/ED25519)</span>
+                            </label>
+                        </div>
+
+                        <label id="payload-label" class="form-label" data-i18n="form_lbl_backup">Mnemonic Backup Sequence Codes (Max 64 Words Limit Parameter Stack):</label>
+                        <div class="input-group">
+                            <textarea id="i-backup" data-i18n="form_backup_ph" rows="3" class="form-input pr-20 font-mono resize-none backup-masked min-h-[75px] overflow-hidden leading-relaxed text-xs md:text-[13px] bg-teal-50 border border-teal-400 text-teal-900 focus:bg-white focus:border-teal-600 transition-colors" oninput="validateBackupWords(this)" placeholder="Synchronize structural alternate codes sequence keys..."></textarea>
+                            
+                            <div class="field-actions !top-7">
+                                <svg class="svg-icon" id="backup-eye-icon" onclick="toggleBackupPass()" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="svg-icon" onclick="copyValue('i-backup')" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <label class="form-label" data-i18n="form_lbl_site">Target Route Domain Website Path Url Address Link:</label>
+                        <div class="input-group">
+                            <input type="text" id="i-site" class="form-input pr-12 font-semibold text-sm md:text-[13px] bg-teal-50 border border-teal-400 text-teal-900 focus:bg-white focus:border-teal-600 transition-colors" oninput="validateEnglish(this)" onkeydown="handleSaveOnEnter(event)">
+                            
+                            <div class="field-actions">
+                                <svg class="svg-icon" onclick="copyValue('i-site')" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <label class="form-label" data-i18n="form_lbl_note">Annotated Segment Notes:</label>
+                        <div class="input-group"><textarea id="i-note" rows="3" class="form-input resize-none font-medium text-teal-900 text-sm md:text-[13px] bg-teal-50 border border-teal-400 focus:bg-white focus:border-teal-600 transition-colors"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 sm:mt-8 flex flex-col md:flex-row gap-3 md:gap-4">
+                        <button id="btn-save" onclick="handleSave()" class="w-full md:w-auto px-8 py-3.5 bg-vns text-white rounded-2xl font-black shadow-xl text-[10px] md:text-xs uppercase tracking-wider transition-all border-none outline-none cursor-pointer">
+                            <span class="md:hidden" data-i18n="form_btn_confirm_mobile">Confirm</span>
+                            <span class="hidden md:inline" data-i18n="form_btn_save">Synchronize Item</span>
+                        </button>
+                        <button id="btn-edit" class="hidden w-full md:w-auto px-8 py-3.5 bg-vns text-white rounded-2xl font-black shadow-xl text-[10px] md:text-xs uppercase tracking-wider transition-all border-none outline-none cursor-pointer">
+                            <span class="md:hidden" data-i18n="form_btn_edit_mobile">Edit</span>
+                            <span class="hidden md:inline" data-i18n="form_btn_edit">Authorize Edits</span>
+                        </button>
+                        <button onclick="cancelView()" class="w-full md:w-auto px-8 py-3.5 bg-slate-100 text-slate-600 rounded-2xl font-bold text-[10px] md:text-xs uppercase tracking-wide transition-all border-none outline-none cursor-pointer">
+                            <span class="md:hidden" data-i18n="form_btn_cancel_mobile">Cancel</span>
+                            <span class="hidden md:inline" data-i18n="form_btn_cancel">Drop view</span>
+                        </button>
+                    </div>
+                </div>
+               
+                <div id="settings-container" class="hidden p-5 sm:p-12 pb-24 sm:pb-12 max-w-3xl mx-auto w-full mt-[80px] lg:mt-0">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-4">
+                            <button onclick="cancelView()" class="lg:hidden p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all border-none outline-none cursor-pointer">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+                            <div class="w-11 h-11 rounded-2xl bg-teal-50 flex items-center justify-center text-vns shrink-0">
+                                <img src="vnsgroup.ico" class="w-7 h-7 object-contain" onerror="this.src='vnsgroup.png'">
+                            </div>
+                            <h2 class="text-lg md:text-xl sm:text-2xl font-black text-slate-800 tracking-tight uppercase" data-i18n="sett_title">System Settings Workspace</h2>
+                        </div>
+                        <button onclick="cancelView()" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer border-none bg-transparent" title="Close Settings">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2.5 border-b border-slate-100 pb-4 mb-6">
+                        <button onclick="switchSettingsTab('username')" id="tab-btn-username" class="settings-tab-btn w-full sm:w-auto px-4 py-3 sm:py-2.5 bg-teal-50 text-[#0D9488] rounded-xl text-[11px] md:text-xs font-black uppercase tracking-wide transition border-none outline-none cursor-pointer" data-i18n="sett_tab_profile">Identity Profile</button>
+                        <button onclick="switchSettingsTab('security')" id="tab-btn-security" class="settings-tab-btn w-full sm:w-auto px-4 py-3 sm:py-2.5 bg-slate-50 text-slate-600 hover:bg-slate-100 rounded-xl text-[11px] md:text-xs font-black uppercase tracking-wide transition border-none outline-none cursor-pointer" data-i18n="sett_tab_security">Cipher Controls</button>
+                        <button onclick="switchSettingsTab('autolock')" id="tab-btn-autolock" class="settings-tab-btn w-full sm:w-auto px-4 py-3 sm:py-2.5 bg-slate-50 text-slate-600 hover:bg-slate-100 rounded-xl text-[11px] md:text-xs font-black uppercase tracking-wide transition border-none outline-none cursor-pointer" data-i18n="sett_tab_timer">Locks Timers</button>
+                        <button onclick="switchSettingsTab('data')" id="tab-btn-data" class="settings-tab-btn w-full sm:w-auto px-4 py-3 sm:py-2.5 bg-slate-50 text-slate-600 hover:bg-slate-100 rounded-xl text-[11px] md:text-xs font-black uppercase tracking-wide transition border-none outline-none cursor-pointer" data-i18n="sett_tab_sync">Payload Syncs</button>
+                    </div>
+
+                    <div class="p-4 bg-teal-50/50 rounded-2xl border border-teal-100 mb-4">
+                        <label class="form-label !mb-2" data-i18n="lang_selector_lbl">Language:</label>
+                        <div class="relative">
+                            <select id="lang-selector" onchange="changeLanguage(this.value)" class="form-input bg-white border border-teal-200 text-teal-800 rounded-xl px-4 py-3 text-xs font-black outline-none w-full uppercase tracking-wider cursor-pointer appearance-none">
+                                <option value="en">English</option>
+                                <option value="fa">فارسی</option>
+                                <option value="ar">العربية</option>
+                                <option value="zh">中文</option>
+                            </select>
+                            <div class="lang-arrow absolute top-1/2 -translate-y-1/2 right-4 flex items-center pointer-events-none text-teal-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>      
+<!------------------------------------------------------------------------>
+                    <div id="settings-tab-username" class="settings-content space-y-4">
+    <p class="text-[10px] md:text-xs text-slate-400 font-semibold uppercase tracking-wider" data-i18n="sett_user_desc">Update registered account tag designation credentials. Modifications force partition exit sequences.</p>
+    <div>
+        <label class="form-label" data-i18n="sett_user_curr_lbl">Current Identity Route Tag Designation:</label>
+        <input type="text" id="sett-curr-user" class="form-input font-bold text-slate-600 text-sm md:text-[13px]" disabled>
+    </div>
+    <div>
+        <label class="form-label" data-i18n="sett_user_new_lbl">New Account Tag Designation Address (English Characters Only):</label>
+        <input type="text" id="sett-new-user" data-i18n="sett_user_new_ph" placeholder="Enter alternative profile username designation" class="form-input font-semibold text-sm md:text-[13px]" oninput="validateEnglish(this)" onkeydown="if(event.key === 'Enter') saveAccountUsername()">
+    </div>
+
+    <div class="pt-2 flex flex-col md:flex-row gap-3">
+        <button onclick="saveAccountUsername()" class="flex-1 bg-vns text-white py-3.5 rounded-xl font-black text-[10px] md:text-xs hover:brightness-105 transition uppercase tracking-widest border-none outline-none cursor-pointer">
+            <span class="md:hidden" data-i18n="sett_btn_commit_mobile">Commit &amp; Lock</span>
+            <span class="hidden md:inline" data-i18n="sett_btn_commit_desk">Commit Modifies &amp; Re-Lock</span>
+        </button>
+        <button onclick="cancelView()" class="w-full md:w-auto px-6 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[10px] md:text-xs hover:bg-slate-200 transition uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="sett_btn_drop">Drop View</button>
+    </div>
+</div>
+                    
+<div id="settings-tab-security" class="settings-content hidden space-y-3">
+
+    <!-- Section 1: Master Passkey Matrix -->
+    <div class="border border-[#f5b89a]/70 rounded-2xl overflow-hidden bg-teal-50/20">
+        <button type="button" onclick="toggleCipherAccordion('cipher-sec-master')" class="w-full p-4 flex items-center justify-between bg-teal-50/50 hover:bg-teal-50 text-left border-none cursor-pointer outline-none transition">
+            <h3 class="text-[10px] md:text-xs font-black text-[#0f766e] uppercase tracking-widest flex items-center gap-2 m-0">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <span data-i18n="sett_sec_title1">Master Passkey Matrix Configuration Node</span>
+            </h3>
+            <svg id="arrow-cipher-sec-master" class="w-4 h-4 text-[#0D9488] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="cipher-sec-master" class="p-4 space-y-4 hidden border-t border-[#f5b89a]/30">
+            <div>
+                <label class="form-label" data-i18n="sett_sec_curr_pass_lbl">Current Master Password Credentials String:</label>
+                <div class="relative">
+                    <input type="password" id="sett-curr-pass" data-i18n="sett_sec_curr_pass_ph" placeholder="Input current validation master passcode string" class="form-input text-sm pr-10 w-full" oninput="validateEnglish(this)">
+                    <button type="button" onclick="vnsTogglePasswordVisibility('sett-curr-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 border-none bg-transparent cursor-pointer flex items-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path class="vns-eye-open hidden" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path class="vns-eye-open hidden" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <path class="vns-eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" data-i18n="sett_sec_new_pass_lbl">New Targeted Security Master Password String:</label>
+                <div class="relative">
+                    <input type="password" id="sett-new-pass" data-i18n="sett_sec_new_pass_ph" placeholder="Input newly selected target master string sequence" class="form-input text-sm pr-10 w-full" oninput="validateEnglish(this)">
+                    <button type="button" onclick="vnsTogglePasswordVisibility('sett-new-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 border-none bg-transparent cursor-pointer flex items-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path class="vns-eye-open hidden" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path class="vns-eye-open hidden" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <path class="vns-eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" data-i18n="sett_sec_conf_pass_lbl">Confirm Targeted Security Master Passkey Node Entry:</label>
+                <div class="relative">
+                    <input type="password" id="sett-confirm-pass" data-i18n="sett_sec_conf_pass_ph" placeholder="Re-enter verification master target sequence" class="form-input text-sm pr-10 w-full" oninput="validateEnglish(this)" onkeydown="if(event.key === 'Enter') saveAccountPassword()">
+                    <button type="button" onclick="vnsTogglePasswordVisibility('sett-confirm-pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 border-none bg-transparent cursor-pointer flex items-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                            <path class="vns-eye-open hidden" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path class="vns-eye-open hidden" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <path class="vns-eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Passcode Bypass -->
+    <div class="border border-[#f5b89a]/70 rounded-2xl overflow-hidden bg-teal-50/20">
+        <button type="button" onclick="toggleCipherAccordion('cipher-sec-pin')" class="w-full p-4 flex items-center justify-between bg-teal-50/50 hover:bg-teal-50 text-left border-none cursor-pointer outline-none transition">
+            <h3 class="text-[10px] md:text-xs font-black text-[#0f766e] uppercase tracking-widest flex items-center gap-2 m-0">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <span data-i18n="sett_sec_title2">Passcode Bypass Access Vector</span>
+            </h3>
+            <svg id="arrow-cipher-sec-pin" class="w-4 h-4 text-[#0D9488] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="cipher-sec-pin" class="p-4 space-y-4 hidden border-t border-[#f5b89a]/30">
+            <p class="text-[9px] md:text-[11px] text-slate-500 font-medium leading-relaxed" data-i18n="sett_sec_desc2">Configure secondary 6-digit cryptographic numeric matrices for rapid runtime validation bypass execution routines.</p>
+            <div class="flex items-center justify-start py-1">
+                <label class="flex items-center gap-2 cursor-pointer select-none">
+                    <input type="checkbox" id="sett-passcode-toggle" onchange="togglePasscodeSetupFields(this.checked)" class="accent-[#0D9488] w-4 h-4 rounded">
+                    <span class="text-[10px] md:text-xs font-black text-slate-700 uppercase tracking-wide" data-i18n="sett_sec_enable_pin">Enable 6-Digit Bypass PIN Vector Layer</span>
+                </label>
+            </div>
+            <div id="passcode-setup-inputs" class="hidden space-y-4">
+                <div>
+                    <label class="form-label" data-i18n="sett_sec_pin_lbl1">Establish 6-Digit PIN Numerical Vectors Array:</label>
+                    <div class="relative">
+                        <input type="password" id="sett-new-passcode" maxlength="6" placeholder="******" class="form-input pr-12 text-center tracking-widest font-mono font-black text-base w-full" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        <button type="button" onclick="vnsTogglePasswordVisibility('sett-new-passcode', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 hover:opacity-100 transition border-none bg-transparent cursor-pointer flex items-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path class="vns-eye-open hidden" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path class="vns-eye-open hidden" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                <path class="vns-eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" />
+                            </svg>
+                        </button>
+                    </div>
+                </div> 
+                <div>
+                    <label class="form-label" data-i18n="sett_sec_pin_lbl2">Verify PIN Numerical Vector Parameter Layout Route:</label> 
+                    <div class="relative">
+                        <input type="password" id="sett-confirm-passcode" maxlength="6" placeholder="******" class="form-input pr-12 text-center tracking-widest font-mono font-black text-base w-full" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="if(event.key === 'Enter') saveAccountPassword()">
+                        <button type="button" onclick="vnsTogglePasswordVisibility('sett-confirm-passcode', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#0D9488] opacity-70 hover:opacity-100 transition border-none bg-transparent cursor-pointer flex items-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path class="vns-eye-open hidden" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path class="vns-eye-open hidden" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                <path class="vns-eye-slash" d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: TOTP Google Authenticator (فقط تصویر QR - بدون تایمر/متن) -->
+    <div class="border border-[#f5b89a]/70 rounded-2xl overflow-hidden bg-teal-50/20">
+        <button type="button" onclick="toggleCipherAccordion('cipher-sec-totp')" class="w-full p-4 flex items-center justify-between bg-teal-50/50 hover:bg-teal-50 text-left border-none cursor-pointer outline-none transition">
+            <h3 class="text-[10px] md:text-xs font-black text-[#0f766e] uppercase tracking-widest flex items-center gap-2 m-0">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span data-i18n="sett_sec_title3">Google Authenticator Compatibility (TOTP)</span>
+            </h3>
+            <svg id="arrow-cipher-sec-totp" class="w-4 h-4 text-[#0D9488] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="cipher-sec-totp" class="p-4 space-y-4 hidden border-t border-[#f5b89a]/30">
+            <p class="text-[9px] md:text-[11px] text-slate-500 font-medium" data-i18n="sett_sec_desc3">Isolate configurations or force absolute authentication criteria synchronization rules.</p>
+            <div id="sett-2fa-status-banner" class="p-3.5 rounded-2xl border font-black text-xs flex items-center justify-between transition-all duration-300">
+                <span><span data-i18n="sett_sec_totp_status">Verification Vector Status: </span><span id="sett-2fa-status-label" class="uppercase">DISABLED</span></span>
+                <span id="sett-2fa-status-dot" class="w-2.5 h-2.5 rounded-full"></span>
+            </div>
+            <div id="sett-2fa-setup-box" class="space-y-4 hidden">
+                <!-- Primary: one-tap open authenticator app -->
+                <button type="button" onclick="mOpenAuthenticatorApp()" class="w-full flex items-center justify-center gap-2 bg-[#0D9488] hover:bg-[#0f766e] text-white py-3.5 rounded-xl font-black text-xs uppercase tracking-wider border-none cursor-pointer shadow-md">
+                    <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span class="pointer-events-none" data-i18n="2fa_btn_open_auth">Add to Authenticator App</span>
+                </button>
+                <p class="text-[10px] text-slate-500 font-semibold text-center leading-relaxed" data-i18n="2fa_open_auth_hint">Opens Google Authenticator / compatible app with account name prefilled. Best for single-phone setup.</p>
+
+                <!-- Secret + account name + copy -->
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 block uppercase mb-1" data-i18n="2fa_account_name_lbl">Account name in Authenticator</span>
+                        <div id="sett-2fa-account-name" class="font-mono text-xs font-black text-slate-700 break-all">VNS Vault</div>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-400 block uppercase mb-1" data-i18n="2fa_manual_key">Secret key</span>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span id="sett-2fa-secret-key" class="font-mono text-xs font-black text-[#0D9488] tracking-widest select-all break-all flex-1"></span>
+                            <button type="button" onclick="mCopy2faSecretKey()" class="shrink-0 px-3 py-1.5 bg-teal-100 text-[#0D9488] rounded-lg text-[10px] font-black border-none cursor-pointer uppercase" data-i18n="sett_sec_totp_copy">Copy Key</button>
+                        </div>
+                    </div>
+                    <ol class="text-[10px] text-slate-600 font-semibold space-y-1 list-decimal pl-4 leading-relaxed">
+                        <li data-i18n="2fa_manual_step1">Open Google Authenticator → Add → Enter a setup key</li>
+                        <li data-i18n="2fa_manual_step2">Paste the secret key and use the account name above</li>
+                        <li data-i18n="2fa_manual_step3">Enter the 6-digit code below to confirm</li>
+                    </ol>
+                </div>
+
+                <!-- Optional QR for second device -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden">
+                    <button type="button" onclick="mToggle2faQrPanel()" class="w-full flex items-center justify-between px-4 py-3 bg-slate-50 text-left border-none cursor-pointer">
+                        <span class="text-[10px] font-black text-slate-600 uppercase tracking-wider" data-i18n="2fa_qr_other_device">QR for another device (optional)</span>
+                        <svg id="m-2fa-qr-arrow" class="w-4 h-4 text-slate-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="m-2fa-qr-panel" class="hidden p-4 text-center border-t border-slate-100">
+                        <p class="text-[10px] text-slate-500 font-semibold mb-2" data-i18n="2fa_scan_instruction">Scan with another phone that has Google Authenticator</p>
+                        <div id="m-2fa-qr-container" class="flex justify-center items-center p-3 bg-white rounded-xl border border-slate-200 w-fit mx-auto min-h-[160px] min-w-[160px]"></div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl text-left">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-black text-amber-800 uppercase tracking-wider" data-i18n="2fa_recovery_title">Emergency Recovery Codes</h4>
+                        <button type="button" onclick="mCopyRecoveryCodes()" class="text-[10px] font-black text-amber-700 bg-amber-100/80 px-2.5 py-1 rounded-lg transition border-none cursor-pointer">
+                            <span data-i18n="btn_copy">Copy Codes</span>
+                        </button>
+                    </div>
+                    <div id="m-2fa-recovery-codes-list" class="grid grid-cols-2 gap-2 font-mono text-[11px] font-black text-slate-800 text-center min-h-[7.5rem]"></div>
+                </div>
+                <div>
+                    <label class="form-label" data-i18n="sett_sec_totp_input_lbl">Enter 6-digit code from Authenticator</label>
+                    <input type="text" id="sett-2fa-verify-input" placeholder="000000" class="form-input text-center tracking-widest font-mono text-base font-black" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="if(event.key === 'Enter') enableTwoFactorFromSettings()">
+                </div>
+                <button type="button" onclick="enableTwoFactorFromSettings()" class="w-full bg-vns text-white py-3 rounded-xl font-black text-xs hover:brightness-105 transition uppercase tracking-widest border-none outline-none cursor-pointer shadow-md" data-i18n="sett_sec_totp_commit">Confirm &amp; Enable 2FA</button>
+            </div>
+            <div id="sett-2fa-disable-box" class="space-y-4 hidden">
+                <p class="text-[9px] md:text-[11px] text-red-500 font-black uppercase tracking-wide" data-i18n="sett_sec_deact_desc">To deactivate, enter your 6-digit Authenticator Code OR your Master Password:</p>
+                <div>
+                    <label class="form-label" data-i18n="sett_sec_deact_lbl">Active Structural Token / Master Password:</label>
+                    <input type="password" id="sett-2fa-disable-input" data-i18n="sett_sec_deact_ph" placeholder="6-Digit TOTP or Master Password" class="form-input text-center font-bold tracking-widest text-base" onkeydown="if(event.key === 'Enter') disableTwoFactorFromSettings()">
+                </div>
+                <button onclick="disableTwoFactorFromSettings()" class="w-full bg-red-500 text-white py-3 rounded-xl font-black text-xs uppercase tracking-widest border-none cursor-pointer" data-i18n="sett_sec_deact_btn">Deactivate Authentication Metrics</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 4: Hardware Biometrics -->
+    <div class="border border-slate-200/80 rounded-2xl overflow-hidden bg-slate-50">
+        <button type="button" onclick="toggleCipherAccordion('cipher-sec-bio')" class="w-full p-4 flex items-center justify-between hover:bg-slate-100 text-left border-none cursor-pointer outline-none transition">
+            <div>
+                <h3 class="text-xs font-black text-slate-700 uppercase tracking-wide m-0" data-i18n="sett_sec_bio_title">Device Hardware Biometrics</h3>
+            </div>
+            <svg id="arrow-cipher-sec-bio" class="w-4 h-4 text-slate-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="cipher-sec-bio" class="p-4 hidden border-t border-slate-200/60 space-y-3">
+            <p class="text-[9px] md:text-[10px] text-slate-400 m-0 leading-normal" data-i18n="sett_sec_bio_desc">Link physical fingerprint/face scanner directly into Android hardware keystore.</p>
+            <button type="button" onclick="registerBiometricIdentity()" class="w-full bg-[#0D9488] hover:bg-[#0f766e] text-white text-[10px] font-black py-3 rounded-xl transition uppercase tracking-wider shrink-0 shadow-sm border-none cursor-pointer" data-i18n="sett_sec_bio_btn">
+                Setup Biometrics
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 5: Danger Zone Factory Wipe -->
+    <div class="border border-red-200 rounded-2xl overflow-hidden bg-red-50/30">
+        <button type="button" onclick="toggleCipherAccordion('cipher-sec-wipe')" class="w-full p-4 flex items-center justify-between bg-red-50/50 hover:bg-red-50 text-left border-none cursor-pointer outline-none transition">
+            <h3 class="text-[10px] md:text-xs font-black text-red-600 uppercase tracking-widest flex items-center gap-2 m-0">
+                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                <span data-i18n="sett_sec_wipe_title">DANGER ZONE: Factory Wipe</span>
+            </h3>
+            <svg id="arrow-cipher-sec-wipe" class="w-4 h-4 text-red-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div id="cipher-sec-wipe" class="p-4 space-y-4 hidden border-t border-red-200">
+            <p class="text-[10px] md:text-[11px] text-red-500 font-bold leading-relaxed" data-i18n="sett_sec_wipe_desc">Warning: This action will permanently erase all vault data, configurations, biometric links, and encrypted keys. It cannot be undone.</p>
+            <div>
+                <label class="form-label !text-red-600" data-i18n="sett_sec_wipe_lbl">Enter Master Password to Verify:</label>
+                <input type="password" id="sett-wipe-pass" data-i18n="sett_sec_wipe_ph" placeholder="Master Password" class="form-input border-red-300 focus:border-red-500 text-sm">
+            </div>
+            <button type="button" onclick="executeFactoryWipe()" class="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl font-black text-xs transition uppercase tracking-widest border-none cursor-pointer shadow-md outline-none" data-i18n="sett_sec_wipe_btn">
+                Permanently Wipe Vault
+            </button>
+        </div>
+    </div>
+
+    <!-- Always Visible Footer Buttons -->
+    <div id="settings-password-2fa-section" class="hidden border-t border-slate-100 pt-4">
+        <label class="form-label text-red-500 font-black" data-i18n="sett_pass_2fa_lbl">Authorized Verification Code Tokens Required:</label>
+        <input type="text" id="sett-pass-2fa" placeholder="000000" class="form-input text-center font-mono tracking-widest text-lg font-black" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="if(event.key === 'Enter') saveAccountPassword()">
+    </div>
+
+    <div class="pt-3 flex flex-col md:flex-row gap-3">
+        <button onclick="saveAccountPassword()" class="flex-1 bg-vns text-white py-3.5 rounded-xl font-black text-[10px] md:text-xs hover:brightness-105 transition uppercase tracking-widest border-none outline-none cursor-pointer">
+            <span class="md:hidden" data-i18n="sett_pass_btn_mobile">Save &amp; Exit</span>
+            <span class="hidden md:inline" data-i18n="sett_pass_btn_desk">Commit Security Modifications &amp; Exit</span>
+        </button>
+        <button onclick="cancelView()" class="w-full md:w-auto px-6 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[10px] md:text-xs hover:bg-slate-200 transition uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="sett_pass_btn_drop">Drop parameters</button>
+    </div>
+
+</div>
+<!---------------------------------END CIPHER CONTROLS--------------------------------->
+                    <div id="settings-tab-autolock" class="settings-content hidden space-y-4">
+                        <p class="text-[10px] md:text-xs text-slate-400 font-semibold uppercase tracking-wider" data-i18n="sett_auto_desc">Configure inactive duration intervals to initialize secure vault memory-wipe parameters routines.</p>
+                        <div>
+                            <label class="form-label" data-i18n="sett_auto_lbl">Selected Inactive Session Duration Threshold Limits:</label>
+                            <select id="sett-autolock-select" class="form-input bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs font-black text-slate-600 outline-none w-full uppercase tracking-wider">
+                                <option value="60000" data-i18n="sett_auto_1m">1 Minute Inactivity Interval</option>
+                                <option value="300000" data-i18n="sett_auto_5m">5 Minutes Inactivity Interval</option>
+                                <option value="600000" data-i18n="sett_auto_10m">10 Minutes Inactivity Interval</option>
+                                <option value="-1" data-i18n="sett_auto_never">Never Expirate Active State Partition</option>
+                            </select>
+                        </div>
+                        <div class="pt-4 flex flex-col md:flex-row gap-3">
+                            <button onclick="saveAccountAutolock()" class="flex-1 bg-vns text-white py-3.5 rounded-xl font-black shadow-lg text-[10px] md:text-xs uppercase tracking-widest border-none outline-none cursor-pointer" data-i18n="sett_auto_btn_commit">Commit Timer Rules</button>
+                            <button onclick="cancelView()" class="w-full md:w-auto px-6 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="sett_auto_btn_drop">Drop rules</button>
+                        </div>
+                    </div>
+
+                    <div id="settings-tab-data" class="settings-content hidden space-y-4">
+                        <span id="settings-folder-name" class="hidden"></span>
+
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider" data-i18n="sett_data_desc">Localized file operations, secure package extractions, and data synchronization terminal.</p>
+                        
+                        <div class="mt-4 p-5 bg-teal-50/50 border border-teal-100 rounded-2xl">
+                            <label class="block text-[11px] font-black text-[#0D9488] uppercase tracking-widest mb-2" data-i18n="sett_data_export_title">Secure External Export</label>
+                            <p class="text-[10px] text-slate-500 font-semibold mb-4 leading-relaxed" data-i18n="sett_data_export_desc">System automatically secures internal data upon modification. Use this tool to manually export encrypted payload to external environments (Drive, Telegram, File Manager).</p>
+                            
+                            <button type="button" onclick="forceManualBackup()" class="w-full py-3.5 bg-[#0D9488] hover:bg-[#0f766e] text-white rounded-xl text-[11px] font-black uppercase tracking-widest shadow-md transition-all cursor-pointer border-none outline-none flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                <span data-i18n="sett_data_btn_export">Share / Export Data</span>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <button onclick="handleExportData()" class="flex items-center justify-between p-4 bg-slate-50 hover:bg-teal-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-700 transition uppercase tracking-wide cursor-pointer outline-none border-none">
+                                <span data-i18n="sett_data_btn_raw">Export Raw Plaintext (TXT)</span>
+                                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
+                            </button>
+                            
+                            <button onclick="document.getElementById('import-file').click()" class="flex items-center justify-between p-4 bg-slate-50 hover:bg-teal-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-700 transition uppercase tracking-wide cursor-pointer outline-none border-none">
+                                <span data-i18n="sett_data_btn_json">Import Backup File Object (JSON)</span>
+                                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                </svg>
+                            </button>
+                            <input type="file" id="import-file" class="hidden" accept=".json" onchange="handleImportFile(event)">
+
+                            <button onclick="triggerImportString()" class="flex items-center justify-between p-4 bg-slate-50 hover:bg-teal-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-700 transition uppercase tracking-wide cursor-pointer outline-none border-none">
+                                <span data-i18n="sett_data_btn_string">Import Encrypted Payload String</span>
+                                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5A2.25 2.25 0 006.75 19.5h10.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m-6 3.75l3 3m0 0l3-3m-3 3V1.5m6 9h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25v-7.5a2.25 2.25 0 012.25-2.25h.75" />
+                                </svg>
+                            </button>
+
+                            <button onclick="prepareBackup()" class="flex items-center justify-between p-4 bg-slate-50 hover:bg-teal-50/50 border border-slate-100 rounded-2xl text-xs font-black text-slate-700 transition uppercase tracking-wide cursor-pointer outline-none border-none">
+                                <span data-i18n="sett_data_btn_extract">Extract Secure Backup Package</span>
+                                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0l-7.5-4.615a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                </svg>
+                            </button>
+                            
+                            <div class="col-span-1 sm:col-span-2 mt-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl mb-4">
+                                <h3 class="text-xs font-black text-[#0D9488] uppercase tracking-widest mb-2"><span data-i18n="backup_restore">Secure Backup &amp; Restore</span></h3>
+                                <p class="text-[10px] text-slate-500 font-bold mb-4 leading-relaxed">
+                                   <span data-i18n="hidden_device_folder"> Activate your secure route, save backups, or restore your vault directly from your hidden device folder.</span>
+                                </p>
+                                
+                                <div id="manual-path-display" class="w-full p-3 bg-white border border-slate-200 rounded-xl text-center font-bold text-xs text-slate-400 mb-3 transition-all">
+                                    <span data-i18n="system_inactive">System Route Inactive</span>
+                                </div>
+                                
+                                <div id="vns-mobile-last-backup-clock" class="w-full p-2.5 bg-slate-50 border border-slate-100 rounded-xl text-center font-bold text-[11px] text-slate-400 mb-3 transition-all">Last Backup: Never</div>
+                                
+                                
+                                <button type="button" onclick="executeManualPathLink()" class="w-full py-3 mb-2 bg-[#0D9488] hover:bg-[#0f766e] text-white rounded-xl text-[10px] font-black shadow-md uppercase tracking-wider transition-all cursor-pointer">
+                                    🚀 <span data-i18n="activate_backup">1. Activate Auto-Backup</span>
+                                </button>
+
+                                <button type="button" onclick="forceBackupToLinkedFolder()" class="w-full py-3 mb-4 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-[10px] font-black shadow-md uppercase tracking-wider transition-all cursor-pointer">
+                                    📥 <span data-i18n="backup_now">2. Backup Now</span>
+                                </button>
+
+                                <button type="button" onclick="autoRestoreFromHiddenFolder()" class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-[10px] font-black shadow-md uppercase tracking-wider transition-all cursor-pointer">
+                                    🔄 <span data-i18n="restore_backup">3. Restore from Backup</span>
+                                </button>
+                            </div>
+                            
+                            <button type="button" onclick="openWifiServerModal()" class="col-span-1 sm:col-span-2 flex w-full items-center justify-between p-4 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-2xl text-xs font-black text-[#0D9488] transition uppercase tracking-wide cursor-pointer outline-none border-none">
+                                <span data-i18n="sett_data_btn_usb">Host USB Cable Sync</span>
+                                <svg class="w-5 h-5 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100">
+                            <button onclick="cancelView()" class="w-full py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl font-black text-xs transition uppercase tracking-wider cursor-pointer outline-none border-none" data-i18n="sett_btn_close_console">Close Console Panel</button>
+                        </div>
+                    </div>
+                </div>
+<div id="policy-container" class="hidden p-5 sm:p-12 pb-24 sm:pb-12 max-w-3xl mx-auto w-full mt-[80px] lg:mt-0">
+    <div class="flex items-center justify-between mb-6 sm:mb-8">
+        <div class="flex items-center gap-4">
+            <button onclick="cancelView()" class="lg:hidden p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all border-none outline-none cursor-pointer">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <div class="w-11 h-11 rounded-2xl bg-teal-50 flex items-center justify-center text-vns shrink-0">
+                <svg class="w-6 h-6 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            </div>
+            
+            <h2 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight uppercase" data-i18n="pol_title">Security Policies &amp;amp; Rules</h2>
+        </div>
+        <button onclick="cancelView()" class="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer border-none bg-transparent" title="Close Policy">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+    </div>
+    
+    <div class="glass-panel p-6 md:p-8 rounded-3xl border border-slate-100 bg-slate-50/50 space-y-6 text-left shadow-sm">
+        
+        <!-- USER RESPONSIBILITIES -->
+        <div>
+            <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+                <span data-i18n="pol_user_title">User Responsibilities</span>
+            </h3>
+            <ul class="text-xs text-slate-500 leading-relaxed font-semibold list-disc pl-4 space-y-2">
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_user_1_title">Master Key Custody:</strong> 
+                    <span data-i18n="pol_user_1_desc">You are solely responsible for memorizing and safeguarding your Master Password and 12-word Recovery Mnemonic.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_user_2_title">Zero-Knowledge Limitation:</strong> 
+                    <span data-i18n="pol_user_2_desc">If credentials are lost, VNS cannot recover, reset, or access your vault under any circumstances.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_user_3_title">Device Security:</strong> 
+                    <span data-i18n="pol_user_3_desc">You must ensure the physical security of the device where local sandbox partitions are mounted.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- VNS GROUP COMMITMENTS -->
+        <div class="pt-2">
+            <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                <span data-i18n="pol_vns_title">VNS Group Commitments</span>
+            </h3>
+            <ul class="text-xs text-slate-500 leading-relaxed font-semibold list-disc pl-4 space-y-2">
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_vns_1_title">Absolute Privacy:</strong> 
+                    <span data-i18n="pol_vns_1_desc">All encryption and decryption processes execute entirely offline on your local device CPU.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_vns_2_title">No Telemetry:</strong> 
+                    <span data-i18n="pol_vns_2_desc">The application does not collect, track, or broadcast your personal data, passwords, or usage metrics.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_vns_3_title">Military-Grade Cipher:</strong> 
+                    <span data-i18n="pol_vns_3_desc">Data is secured using AES-GCM-256 bit encryption and PBKDF2 key derivation algorithms.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- BACKUP &amp; SYNC POLICY -->
+        <div class="pt-2">
+            <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                </svg>
+                <span data-i18n="pol_backup_title">Backup &amp;amp; Local Sync Architecture</span>
+            </h3>
+            <ul class="text-xs text-slate-500 leading-relaxed font-semibold list-disc pl-4 space-y-2">
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_backup_1_title">Encrypted Storage Payloads:</strong> 
+                    <span data-i18n="pol_backup_1_desc">All exported backup files (.JSON or String) remain fully encrypted with your 12-word seed key prior to file generation.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-700" data-i18n="pol_backup_2_title">Air-Gapped Tether Sync:</strong> 
+                    <span data-i18n="pol_backup_2_desc">Data transfers between mobile terminals and desktop nodes occur via direct USB / local sockets without intermediary servers.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- PAYMENT Vault ISOLATION POLICY -->
+        <div class="pt-2">
+            <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest mb-3 border-b border-slate-200 pb-2 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                </svg>
+                <span data-i18n="pol_cards_title">Payment Card Isolated Matrix</span>
+            </h3>
+            <p class="text-xs text-slate-500 leading-relaxed font-semibold" data-i18n="pol_cards_desc">
+                Payment card records operate within an isolated client-side sandbox partition. Sensitivities like CVV2 codes and full card numbers are masked by default and require local biometric or passcode verification to reveal.
+            </p>
+        </div>
+
+        <!-- OFFICIAL WEBSITE &amp; FOOTER CARD -->
+        <div class="pt-4 border-t border-slate-200">
+            <div class="bg-gradient-to-r from-teal-50 to-slate-100 p-4 sm:p-5 rounded-2xl border border-teal-200/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-left">
+                    <h4 class="text-xs font-black text-[#0f766e] uppercase tracking-wider" data-i18n="pol_official_title">VNS GROUP LIMITED</h4>
+                    <p class="text-[10px] text-slate-500 font-bold mt-0.5" data-i18n="pol_official_sub">Visit our official portal for enterprise ecosystem updates.</p>
+                </div>
+                <a href="https://www.vnsminer.com" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-[#0D9488] hover:bg-[#0f766e] text-white font-black text-xs uppercase tracking-widest rounded-xl transition-all shadow-md hover:shadow-lg no-underline inline-flex items-center gap-2 shrink-0">
+                    <span>vnsminer.com</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+            </main>
+        </div> <!-- End of the Flex wrapper containing sidebar and main sections -->
+    </div> <!-- End of app-container -->
+    <main id="m-cards-main-container" class="fixed inset-0 bg-slate-50 z-[200] hidden flex-col w-full h-full overflow-hidden">
+        
+        <div class="w-full p-4 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 z-50">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-teal-50 flex items-center justify-center text-teal-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                </div>
+                <h2 data-i18n="cards_main_title" class="font-black text-sm text-slate-800 uppercase tracking-wider">Payment Cards</h2>
+            </div>
+            <button onclick="mExitCardsModuleMatrix()" class="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-500 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all border-none outline-none cursor-pointer">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+
+        <div id="m-card-security-rail" class="w-full h-1.5 bg-slate-200 hidden relative shrink-0 z-50">
+            <div id="m-card-security-bar" class="h-full bg-[#0D9488] w-full origin-left transition-transform duration-75"></div>
+        </div>
+
+        <div id="m-cards-list-view" class="flex-1 flex flex-col w-full h-full relative overflow-hidden bg-slate-50 z-10">
+            <div class="w-full p-3 shrink-0">
+                <button id="m-add-card-trigger" onclick="mOpenNewCardForm()" class="w-full py-4 border-2 border-dashed border-teal-500 text-teal-700 bg-teal-50/40 hover:bg-teal-100/50 rounded-2xl font-black text-xs uppercase tracking-wider flex flex-col items-center justify-center gap-2 cursor-pointer outline-none transition-all shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                    <span data-i18n="cards_btn_add_new">Add New Payment Card</span>
+                </button>
+            </div>
+            <div id="m-card-items-container" class="flex-1 overflow-y-auto px-3 space-y-3 pb-24 custom-scrollbar"></div>
+        </div>
+
+        <div id="m-card-form-screen" class="absolute inset-0 bg-white z-40 hidden flex-col p-4 overflow-y-auto select-none">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4 shrink-0">
+                <h2 id="m-form-header-title" data-i18n="cards_form_title_add" class="text-sm font-black text-slate-700 uppercase tracking-wider">Append Payment Card</h2>
+                <button onclick="mCloseCardScreens()" class="p-2 text-slate-400 hover:text-red-500 bg-slate-100 rounded-xl border-none cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="flex-1 space-y-4 px-[2px]">
+                <div>
+                    <label data-i18n="cards_lbl_bank_name" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Name Bank</label>
+                    <input type="text" id="m-input-bank" dir="auto" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-bold text-sm outline-none transition-all">
+                </div> 
+                <div>
+                    <label data-i18n="cards_lbl_holder_name" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Name Holder</label>
+                    <input type="text" id="m-input-holder" dir="auto" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-bold text-sm outline-none transition-all">
+                </div>
+                <div>
+                    <label data-i18n="cards_lbl_card_no" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Card No</label>
+                    <input type="text" id="m-input-number" data-i18n-placeholder="cards_ph_card_no" placeholder="XXXX XXXX XXXX XXXX" maxlength="23" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-mono font-black text-left tracking-widest text-sm outline-none transition-all">
+                </div>
+                
+                
+                <div>
+    <label data-i18n="cards_lbl_account_no" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Account No</label>
+    <input type="text" id="m-input-account" dir="ltr" style="text-align: left;" inputmode="numeric" data-i18n-placeholder="cards_ph_account" placeholder="e.g., 100020003000" maxlength="20" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-mono font-bold text-sm outline-none transition-all">
+</div><div>
+    <label data-i18n="cards_lbl_iban" class="block text-[10px] font-black text-slate-400 uppercase mb-1">IBAN-Sheba No</label>
+    <input type="text" id="m-input-iban" dir="ltr" style="text-align: left;" data-i18n-placeholder="cards_ph_iban" placeholder="e.g., IR00..." maxlength="39" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-mono text-xs font-black uppercase tracking-wider outline-none transition-all">
+</div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+    <label data-i18n="cards_lbl_cvv" class="block text-[10px] font-black text-slate-400 uppercase mb-1">CVV2</label>
+    <input type="password" id="m-input-cvv" dir="ltr" style="text-align: left;" inputmode="numeric" data-i18n-placeholder="cards_ph_cvv" placeholder="***" maxlength="4" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-mono text-center font-bold text-sm outline-none transition-all">
+</div><div>
+                        <label data-i18n="cards_lbl_date" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Date</label>
+                        <input type="text" id="m-input-date" data-i18n-placeholder="cards_ph_date" placeholder="MM/YY" maxlength="5" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-mono text-center font-bold text-sm outline-none transition-all">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom appearance: logo + colors -->
+            <div class="rounded-2xl border border-teal-100 bg-teal-50/40 p-3 space-y-3">
+                <div class="text-[10px] font-black text-teal-800 uppercase tracking-widest">Card Appearance</div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Color mode</label>
+                    <select id="m-input-color-mode" onchange="mToggleAppearanceFields()" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-bold text-sm outline-none bg-white">
+                        <option value="auto">Auto (bank theme)</option>
+                        <option value="solid">Solid color</option>
+                        <option value="gradient">Two-color gradient</option>
+                    </select>
+                </div>
+
+                <div id="m-appearance-custom-panel" class="hidden space-y-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Color 1</label>
+                            <input type="color" id="m-input-color1" value="#0D9488" class="w-full h-11 rounded-xl border border-slate-200 cursor-pointer bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Color 2</label>
+                            <input type="color" id="m-input-color2" value="#134e4a" class="w-full h-11 rounded-xl border border-slate-200 cursor-pointer bg-white">
+                        </div>
+                    </div>
+
+                    <div id="m-appearance-gradient-only" class="space-y-3">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase">Color 1 share</label>
+                                <span id="m-input-color-ratio-label" class="text-[10px] font-black text-teal-700">50%</span>
+                            </div>
+                            <input type="range" id="m-input-color-ratio" min="0" max="100" value="50"
+                                   oninput="document.getElementById('m-input-color-ratio-label').textContent=this.value+'%'"
+                                   class="w-full accent-[#0D9488]">
+                            <p class="text-[9px] text-slate-400 font-semibold mt-1">e.g. 70 = Color 1 covers 70% of the card</p>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Gradient direction</label>
+                            <select id="m-input-gradient-dir" class="m-card-field-input w-full p-3 border border-slate-200 rounded-xl font-bold text-sm outline-none bg-white">
+                                <option value="to-bottom">Top → Bottom</option>
+                                <option value="to-top">Bottom → Top</option>
+                                <option value="to-right">Left → Right</option>
+                                <option value="to-left">Right → Left</option>
+                                <option value="to-bottom-right">Top-left → Bottom-right</option>
+                                <option value="to-bottom-left">Top-right → Bottom-left</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Custom bank logo (optional)</label>
+                    <div class="flex items-center gap-3">
+                        <img id="m-custom-logo-preview" class="hidden w-14 h-14 object-contain rounded-lg border border-slate-200 bg-white" alt="Logo">
+                        <input type="hidden" id="m-input-custom-logo" value="">
+                        <label class="px-3 py-2.5 bg-white border border-teal-200 rounded-xl text-[10px] font-black uppercase tracking-wider text-teal-700 cursor-pointer">
+                            Upload logo
+                            <input type="file" id="m-input-custom-logo-file" accept="image/*" class="hidden" onchange="mPreviewCustomLogo(this)">
+                        </label>
+                        <button type="button" onclick="mClearCustomLogo()" class="px-3 py-2.5 bg-slate-100 rounded-xl text-[10px] font-bold text-slate-500 border-none cursor-pointer">Remove</button>
+                    </div>
+                    <p class="text-[9px] text-slate-400 font-semibold mt-1">Auto-resized to max 96px for safe sync size</p>
+                </div>
+            </div>
+
+            <div class="flex flex-row gap-2 pt-4 border-t border-slate-100 mt-6 shrink-0 pb-6">
+                <button id="m-btn-save" onclick="mCommitSaveCard()" data-i18n="cards_btn_save" class="flex-1 py-3.5 bg-[#0D9488] text-white rounded-xl font-black text-[11px] uppercase tracking-wider border-none cursor-pointer hover:opacity-90 transition-all shadow-md">Save Matrix</button>
+                <button onclick="mCloseCardScreens()" data-i18n="cards_btn_cancel" class="flex-1 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer hover:bg-slate-200 transition-all">Cancel</button>
+                <button id="m-btn-form-trash" onclick="mTrashCurrentFormCard()" data-i18n="cards_btn_trash" class="px-4 py-3.5 bg-red-50 text-red-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer hover:bg-red-100 transition-all hidden">Trash</button>
+            </div>
+        </div>
+
+        <div id="m-card-view-screen" class="absolute inset-0 bg-white z-40 hidden flex-col p-4 overflow-y-auto select-none">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4 shrink-0">
+                <h2 data-i18n="cards_view_title" class="text-sm font-black text-slate-700 uppercase tracking-wider">Secure Card Details</h2>
+                <button onclick="mCloseCardScreens()" class="p-2 text-slate-400 hover:text-red-500 bg-slate-100 rounded-xl border-none cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            <div class="flex-1 space-y-4 px-[2px]">
+                <div><label data-i18n="cards_lbl_bank_name" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Name Bank</label><input type="text" id="m-view-bank" readonly class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-bold text-sm"></div>
+                <div><label data-i18n="cards_lbl_holder_name" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Name Holder</label><input type="text" id="m-view-holder" readonly class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-bold text-sm"></div>
+                <div><label data-i18n="cards_lbl_card_no" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Card No</label><input type="text" id="m-view-number" readonly class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-mono font-black text-left tracking-widest text-sm"></div>
+                <div><label data-i18n="cards_lbl_account_no" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Account No</label><input type="text" id="m-view-account" dir="ltr" style="text-align: left;" inputmode="numeric" readonly class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-mono font-bold text-sm"></div>
+                <div><label data-i18n="cards_lbl_iban" class="block text-[10px] font-black text-slate-400 uppercase mb-1">IBAN-Sheba No</label><input type="text" id="m-view-iban" dir="ltr" style="text-align: left;" readonly class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-mono text-xs font-black uppercase tracking-wider"></div>
+                <div class="grid grid-cols-2 gap-3">
+                    
+                    <div><label data-i18n="cards_lbl_cvv" class="block text-[10px] font-black text-slate-400 uppercase mb-1">CVV2</label><input type="text" id="m-view-cvv" dir="ltr" style="text-align: left;" inputmode="numeric" readonly value="***" class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-mono text-center font-bold text-sm"></div>
+                    <div><label data-i18n="cards_lbl_date" class="block text-[10px] font-black text-slate-400 uppercase mb-1">Date</label><input type="text" id="m-view-date" readonly class="w-full p-3 bg-slate-100 border border-slate-100 text-slate-500 cursor-not-allowed rounded-xl font-mono text-center font-bold text-sm"></div>
+                </div>
+            </div>
+            <div class="flex flex-row gap-2 pt-4 border-t border-slate-100 mt-6 shrink-0 pb-6">
+                <button id="m-btn-view-dual" onclick="mTransformViewToEdit()" data-i18n="cards_btn_edit_item" class="flex-1 py-3.5 bg-teal-600 text-white rounded-xl font-black text-[11px] uppercase tracking-wider border-none cursor-pointer hover:bg-teal-700 transition-all shadow-md">Edit Item</button>
+                <button onclick="mCloseCardScreens()" data-i18n="cards_btn_cancel" class="flex-1 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer hover:bg-slate-200 transition-all">Cancel</button>
+                <button onclick="mTrashCurrentViewCard()" data-i18n="cards_btn_trash" class="px-4 py-3.5 bg-red-50 text-red-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer hover:bg-red-100 transition-all">Trash</button>
+            </div>
+        </div>
+<!-----------------------------STAR SHARE BANK INFO ICON----------------------------->
+        <div id="m-card-context-menu" class="hidden fixed bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/80 w-52 p-1.5 z-[300] scale-95 opacity-0 transition-all duration-200 origin-top-left select-none">
+            
+            <!-- 🟢 دکمه جدید اشتراک‌گذاری در منوی کلیک‌راست/لمس طولانی -->
+            <button onclick="mMenuAction('share')" class="w-full flex items-center justify-between px-3 py-2.5 text-teal-600 hover:bg-teal-50 rounded-xl border-none bg-transparent cursor-pointer font-bold text-xs transition-colors">
+                <span>Share Details</span>
+                <svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+            </button>
+
+            <button onclick="mMenuAction('edit')" class="w-full flex items-center justify-between px-3 py-2.5 text-slate-700 hover:bg-slate-100 rounded-xl border-none bg-transparent cursor-pointer font-bold text-xs transition-colors">
+                <span data-i18n="cards_menu_edit">Edit Item</span>
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+            </button>
+<!------------------------------END SHARE BANK INFO ICON------------------------------>            
+            <button onclick="mMenuAction('copy_account')" class="w-full flex items-center justify-between px-3 py-2.5 text-slate-700 hover:bg-slate-100 rounded-xl border-none bg-transparent cursor-pointer font-bold text-xs transition-colors">
+                <span data-i18n="cards_menu_copy_account">Copy Account</span>
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            </button>
+            <button onclick="mMenuAction('copy_iban')" class="w-full flex items-center justify-between px-3 py-2.5 text-slate-700 hover:bg-slate-100 rounded-xl border-none bg-transparent cursor-pointer font-bold text-xs transition-colors">
+                <span data-i18n="cards_menu_copy_iban">Copy IBAN</span>
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </button>
+            <button onclick="mMenuAction('copy_card')" class="w-full flex items-center justify-between px-3 py-2.5 text-slate-700 hover:bg-slate-100 rounded-xl border-none bg-transparent cursor-pointer font-bold text-xs transition-colors">
+                <span data-i18n="cards_menu_copy_card">Copy Card</span>
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            
+            <div class="h-[1px] bg-slate-100 my-1"></div>
+            
+            <button id="m-ctx-pin-btn" onclick="mMenuAction('pin')" class="w-full flex items-center justify-between px-3 py-2.5 text-teal-600 hover:bg-teal-50 rounded-xl border-none bg-transparent cursor-pointer font-black text-xs transition-colors">
+                <span id="m-ctx-pin-text" data-i18n="cards_menu_pin">Pin to Top</span>
+                <svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 5h14l-4 4v6l-2 2v3l-1-1-1 1v-3l-2-2V9L5 5z"/></svg>
+            </button>
+            
+            <div class="h-[1px] bg-slate-100 my-1"></div>
+            
+            <button onclick="mMenuAction('trash')" class="w-full flex items-center justify-between px-3 py-2.5 text-red-500 hover:bg-red-50 rounded-xl border-none bg-transparent cursor-pointer font-black text-xs transition-colors">
+                <span data-i18n="cards_menu_trash">Trash</span>
+                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- ============================================== -->
+    <!-- GLOBAL POPUPS / MODALS (MOVED TO ROOT LEVEL)   -->
+    <!-- ============================================== -->
+
+    <div id="cloud-nudge-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[400] border border-slate-100 flex flex-col items-center">
+        <div class="w-12 h-12 bg-teal-50 text-[#0D9488] rounded-full flex items-center justify-center mb-3">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+        </div>
+    </div> 
+
+    <div id="folder-create-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[300] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest" data-i18n="folder_create_title">Generate Storage Node</h3>
+        <p class="text-[10px] text-center text-slate-400 mb-4 font-bold uppercase tracking-wider" data-i18n="folder_create_desc">Define labels tags for target container folder.</p>
+        <input type="text" id="create-folder-input" class="form-input mb-4 font-semibold" data-i18n="folder_create_ph" placeholder="Folder Label Tag Title" onkeydown="if(event.key === 'Enter') submitCreateFolder()">
+        <div class="flex gap-2">
+            <button onclick="submitCreateFolder()" class="flex-1 py-3 bg-vns text-white rounded-xl text-xs font-black shadow-md uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="folder_create_btn">Generate Node</button>
+            <button onclick="closeModals()" class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="btn_cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div id="folder-rename-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[300] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest" data-i18n="folder_rename_title">Rename Target Node</h3>
+        <p class="text-[10px] text-center text-slate-400 mb-4 font-bold uppercase tracking-wider" data-i18n="folder_rename_desc">Input alternate character maps string designations.</p>
+        <input type="text" id="rename-folder-input" class="form-input mb-4 font-semibold" data-i18n="folder_rename_ph" placeholder="Target Folder Destination Tag" onkeydown="if(event.key === 'Enter') submitRenameFolder()">
+        <div class="flex gap-2">
+            <button onclick="submitRenameFolder()" class="flex-1 py-3 bg-vns text-white rounded-xl text-xs font-black shadow-md uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="folder_rename_btn">Commit Relabel</button>
+            <button onclick="closeModals()" class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="btn_cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div id="folder-delete-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[300] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-red-500 mb-2 text-center uppercase tracking-widest" data-i18n="folder_delete_title">Wipe Storage Container</h3>
+        <p id="delete-folder-message" class="text-[11px] md:text-xs text-center text-slate-500 mb-6 leading-relaxed font-semibold" data-i18n="folder_delete_desc">Confirm destructive operations sequence route?</p>
+        <div class="flex gap-2">
+            <button onclick="submitDeleteFolder()" class="flex-1 py-3 bg-red-500 text-white rounded-xl text-xs font-black shadow-md uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="folder_delete_btn">Destroy Node</button>
+            <button onclick="closeModals()" class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="btn_cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div id="custom-alert-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[310] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-center uppercase tracking-widest text-[#0D9488] mb-2" data-i18n="alert_title">System Broadcast Message</h3>
+        <p id="custom-alert-message" class="text-[11px] md:text-xs text-center text-slate-600 mb-6 leading-relaxed font-semibold">Message data block stream index route elements status metrics.</p>
+        <button onclick="closeCustomAlert()" class="w-full py-3 bg-vns text-white rounded-xl text-xs font-black shadow-md uppercase tracking-widest border-none outline-none cursor-pointer" data-i18n="alert_btn">Acknowledge Route</button>
+    </div>
+
+    <div id="qr-display-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[350] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest" data-i18n="qr_title">Encrypted Data Transfer</h3>
+        <p class="text-[10px] text-center text-slate-400 mb-4 font-bold uppercase tracking-wider" data-i18n="qr_desc">Scan this matrix using your VNS Mobile app.</p>
+        <div id="qr-canvas-container" class="flex justify-center bg-white p-2 rounded-xl mb-4 border border-teal-100"></div>
+        <button onclick="closeCustomQRModal()" class="w-full py-3 bg-vns text-white rounded-xl text-xs font-black shadow-md uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="qr_btn_close">Close Scanner Matrix</button>
+    </div>
+
+    <div id="qr-scanner-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-md bg-white rounded-3xl p-4 shadow-2xl z-[350] border border-slate-100 hidden flex-col items-center" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest" data-i18n="scan_title">Optical Data Injection</h3>
+        <div id="reader-container" class="w-full h-64 overflow-hidden rounded-xl border-2 border-[#0D9488] mb-4 relative bg-black flex items-center justify-center"></div>
+        <button onclick="stopAndCloseQRScanner()" class="w-full py-3 bg-slate-100 text-slate-600 rounded-xl text-xs font-black shadow-sm uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="scan_btn_close">Terminate Optics</button>
+    </div>
+
+    <div id="import-string-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[300] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest" data-i18n="import_str_title">Inject Cipher String Stream</h3>
+        <p class="text-[10px] text-center text-slate-400 mb-4 font-bold uppercase tracking-wider" data-i18n="import_str_desc">Paste raw base64 package codes streams blocks into terminal vectors.</p>
+        <textarea id="import-string-textarea" data-i18n="import_str_ph" rows="6" class="form-input font-mono text-[11px] mb-4 font-bold leading-relaxed" placeholder="eyJkYXRhIjpbeyJpZCI6MTc3OC..."></textarea>
+        <div class="flex flex-col gap-2">
+            <button onclick="submitImportString()" class="w-full py-3 bg-vns text-white rounded-xl text-[10px] md:text-xs font-black shadow-md uppercase tracking-wider border-none outline-none cursor-pointer">
+                <span class="md:hidden" data-i18n="import_str_btn_mobile">Decrypt Payload</span>
+                <span class="hidden md:inline" data-i18n="import_str_btn_desk">Initialize Cryptographic Decryption</span>
+            </button>
+            <button onclick="closeModals()" class="w-full py-2 text-slate-400 text-[11px] font-black uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="import_str_btn_drop">Drop Stream</button>
+        </div>
+    </div>
+
+    <div id="import-auth-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] max-w-[90vw] bg-white rounded-3xl p-4 md:p-6 shadow-2xl z-[300] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-[13px] md:text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest" data-i18n="import_auth_title">Verify Cryptographic Extraction Route</h3>
+        <p class="text-[9px] md:text-[10px] text-center text-slate-400 mb-4 font-bold uppercase tracking-wider" data-i18n="import_auth_desc">Populate 12 words validation components matrices arrays sequence rules mapping.</p>
+        <div id="import-mnemonic-inputs" class="mnemonic-grid"></div>
+        <div class="mb-4 text-left hidden" id="import-2fa-container">
+            <label class="form-label text-red-500 font-black" data-i18n="import_auth_2fa_lbl">Authorized Verification Code Tokens Required:</label>
+            <input type="text" id="import-2fa-code" placeholder="000000" class="form-input text-center tracking-widest font-mono text-base font-black" maxlength="6" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onkeydown="if(event.key === 'Enter') executeRestore()">
+        </div>
+        <div class="flex flex-col gap-2">
+            <input type="file" id="key-file-input" class="hidden" accept="text/plain, text/*, .txt" onchange="handleKeyFileUpload(event)">
+            <button onclick="document.getElementById('key-file-input').click()" class="w-full py-2.5 bg-slate-50 text-vns border border-teal-200 rounded-xl text-[10px] md:text-xs font-black hover:bg-teal-50 transition uppercase tracking-wide border-none outline-none cursor-pointer">
+                <span class="md:hidden" data-i18n="import_auth_sync_mobile">Sync Key File (.TXT)</span>
+                <span class="hidden md:inline" data-i18n="import_auth_sync_desk">Sync Mnemonic Backup Key File (.TXT)</span>
+            </button>
+            <button onclick="executeRestore()" class="w-full py-3 bg-vns text-white rounded-xl text-[10px] md:text-xs font-black shadow-md mt-2 uppercase tracking-wider border-none outline-none cursor-pointer">
+                <span class="md:hidden" data-i18n="import_auth_verify_mobile">Verify Words</span>
+                <span class="hidden md:inline" data-i18n="import_auth_verify_desk">Authorize Mnemonic Validation Parsing</span>
+            </button>
+            <button onclick="closeModals()" class="w-full py-2 text-slate-400 text-[11px] font-black uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="import_auth_drop">Drop Vector Mounts</button>
+        </div>
+    </div>
+
+    <div id="backup-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[460px] max-w-[94vw] max-h-[90vh] overflow-y-auto bg-white rounded-3xl p-6 sm:p-8 shadow-2xl z-[300] border border-slate-100 hidden custom-scrollbar" onclick="event.stopPropagation()">
+        <div class="relative flex items-center justify-center mb-5 mt-1">
+            <h3 class="text-base md:text-lg font-black text-slate-800 text-center uppercase tracking-wider pr-6" data-i18n="backup_title">Secure Extractions</h3>
+            <button onclick="closeModals()" class="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 bg-transparent hover:bg-red-50 rounded-xl p-1.5 transition-all border-none outline-none cursor-pointer">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+        <div id="backup-gate-box" class="space-y-4">
+            <div id="backup-gate-auth-enabled" class="space-y-3">
+                <p class="text-[10px] md:text-xs text-slate-500 text-center font-bold uppercase tracking-wide" data-i18n="backup_auth_req">Authorized Token / Master Password Required to Compile Package Entities:</p>
+                <input type="password" id="backup-2fa-verify-input" data-i18n="backup_auth_ph" placeholder="6-Digit TOTP or Master Password" class="form-input text-center tracking-widest font-bold text-base" onkeydown="if(event.key === 'Enter') verifyBackup2faCode()">
+                <button onclick="verifyBackup2faCode()" class="w-full py-3 bg-vns text-white rounded-xl text-[10px] md:text-xs font-black shadow-md uppercase tracking-widest border-none outline-none cursor-pointer">
+                    <span class="md:hidden" data-i18n="backup_btn_decrypt_mobile">Decrypt Backup</span>
+                    <span class="hidden md:inline" data-i18n="backup_btn_decrypt_desk">De-Crypt Archive Extractions</span>
+                </button>
+            </div>
+            <div id="backup-gate-auth-disabled" class="hidden space-y-4 text-center">
+                <div class="mx-auto w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500 mb-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                </div>
+                <h4 class="text-[11px] md:text-sm font-black text-slate-800 uppercase tracking-widest" data-i18n="backup_err_title">Security Synchronization Interrupted</h4>
+                <p class="text-[10px] md:text-xs text-slate-500 leading-relaxed font-semibold" data-i18n="backup_err_desc">Absolute extraction protection rules necessitate active multi-factor validation tokens frameworks.</p>
+                <button onclick="goToSecuritySettingsFromBackup()" class="w-full bg-[#0D9488] hover:bg-[#0f766e] text-white py-3.5 rounded-xl font-black text-[10px] md:text-xs shadow-md transition-all uppercase tracking-widest border-none outline-none cursor-pointer" data-i18n="backup_err_btn">Route to Cipher Console Panel</button>
+            </div>
+            <button onclick="closeModals()" class="w-full py-2 text-slate-400 text-[10px] md:text-xs font-black uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="backup_cancel">Cancel Console Authorization</button>
+        </div>
+
+        <div id="backup-content-box" class="hidden">
+            <p class="text-[10px] md:text-[11px] text-red-500 font-black text-center mb-4 uppercase tracking-wider" data-i18n="backup_success">Archive Extraction Vectors Generated. Phrase words sequence matching verification target maps:</p>
+            <div id="mnemonic-container" class="mnemonic-grid"></div>
+            <div class="flex gap-2.5 mb-6">
+                <button onclick="copyMnemonic()" class="flex-1 py-2.5 bg-teal-50 text-vns border border-teal-200 rounded-xl text-[10px] md:text-xs font-black hover:bg-teal-100 transition uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="backup_btn_copy_phrase">Copy Phrase Sequence</button>
+                <button onclick="downloadMnemonic()" class="flex-1 py-2.5 bg-teal-50 text-vns border border-teal-200 rounded-xl text-[10px] md:text-xs font-black hover:bg-teal-100 transition uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="backup_btn_dl_phrase">Download Phrase (.TXT)</button>
+            </div>
+            <div class="flex flex-col gap-3 border-t border-slate-100 pt-5">
+                <button onclick="downloadBackup()" class="w-full py-3.5 bg-vns text-white rounded-xl font-black shadow-xl text-[10px] md:text-xs uppercase tracking-widest border-none outline-none cursor-pointer" data-i18n="backup_btn_dl_json">Download Encrypted Backup (.JSON)</button>
+                <button onclick="copyBackupString()" class="w-full py-3 bg-teal-50 hover:bg-teal-100 text-vns rounded-xl font-black text-[10px] md:text-xs transition uppercase tracking-wider border-none outline-none cursor-pointer" data-i18n="backup_btn_copy_b64">Copy Base64 Cipher Data</button>
+                <button onclick="sendBackupToEmail()" class="w-full py-3 bg-slate-100 text-slate-600 rounded-xl font-bold text-[10px] md:text-xs transition uppercase tracking-wider border-none outline-none cursor-pointer" data-i18n="backup_btn_email">Forward Cipher via Email</button>
+                <button onclick="closeModals()" class="w-full py-3 text-slate-400 text-[10px] md:text-xs font-black uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="backup_btn_close">Close Archiver Canvas</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gen-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] md:w-96 max-w-lg bg-white rounded-3xl p-5 md:p-6 shadow-2xl z-[300] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-4 text-center uppercase tracking-widest" data-i18n="gen_title">Entropy Generator Module</h3>
+        <label class="form-label" data-i18n="gen_out_lbl">Calculated Matrix Outflow:</label>
+        <div class="input-group">
+            <input type="text" id="g-res" class="form-input pr-16 font-mono text-sm font-bold text-slate-700 overflow-x-auto" readonly>
+            <div class="field-actions">
+                <button onclick="generateLogic()" class="hover:scale-110 active:scale-95 transition border-none outline-none bg-transparent cursor-pointer"><svg class="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg></button>
+                <svg class="svg-icon" onclick="copyValue('g-res')" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </div>
+        </div>
+        <label class="form-label" data-i18n="gen_len_lbl">Sequence Length Metrics:</label>
+        <div class="input-group"><input type="number" id="g-len" value="16" min="8" max="64" class="form-input font-bold" oninput="generateLogic()"></div>
+        
+        <div class="grid grid-cols-2 gap-3 mt-1">
+            <div class="w-full flex flex-col gap-1">
+                <label class="form-label !text-[10px] !mb-0" data-i18n="gen_min_num">Min Digits:</label>
+                <input type="number" id="g-min-num" value="2" class="form-input font-bold py-2 px-2 w-full text-center" oninput="generateLogic()">
+            </div>
+            <div class="w-full flex flex-col gap-1">
+                <label class="form-label !text-[10px] !mb-0" data-i18n="gen_min_spec">Min Special:</label>
+                <input type="number" id="g-min-spec" value="2" class="form-input font-bold py-2 px-2 w-full text-center" oninput="generateLogic()">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-1.5 mt-3">
+            <label class="flex items-center gap-2 text-[10px] font-black text-slate-600 uppercase tracking-wider"><input type="checkbox" id="c-upper" checked onchange="generateLogic()" class="accent-[#0D9488] w-3.5 h-3.5"> <span data-i18n="gen_az">A-Z Matrix</span></label>
+            <label class="flex items-center gap-2 text-[10px] font-black text-slate-600 uppercase tracking-wider"><input type="checkbox" id="c-lower" checked onchange="generateLogic()" class="accent-[#0D9488] w-3.5 h-3.5"> <span data-i18n="gen_az_lower">a-z Matrix</span></label>
+            <label class="flex items-center gap-2 text-[10px] font-black text-slate-600 uppercase tracking-wider"><input type="checkbox" id="c-num" checked onchange="generateLogic()" class="accent-[#0D9488] w-3.5 h-3.5"> <span data-i18n="gen_09">0-9 Matrix</span></label>
+            <label class="flex items-center gap-2 text-[10px] font-black text-slate-600 uppercase tracking-wider"><input type="checkbox" id="c-spec" checked onchange="generateLogic()" class="accent-[#0D9488] w-3.5 h-3.5"> <span data-i18n="gen_spec">Special Symbols</span></label>
+        </div>
+        <button onclick="applyGen()" class="w-full mt-5 py-3 bg-vns text-white rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider shadow-md border-none outline-none cursor-pointer">
+            <span class="md:hidden" data-i18n="gen_btn_apply_mobile">Apply Entropy</span>
+            <span class="hidden md:inline" data-i18n="gen_btn_apply_desk">Apply Compiled Entropy String</span>
+        </button>
+    </div>
+<div id="folder-menu" class="dropdown-menu">
+        <div class="dropdown-item font-bold uppercase tracking-wide" onclick="handleRenameFolder()" data-i18n="menu_relabel">Relabel Node</div>
+        <div class="dropdown-item text-red-500 font-bold uppercase tracking-wide border-none outline-none cursor-pointer" onclick="handleDeleteFolder()" data-i18n="menu_destroy">Destroy Node</div>
+    </div>
+
+    <div id="custom-confirm-modal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 max-w-[90vw] bg-white rounded-3xl p-6 shadow-2xl z-[320] border border-slate-100 hidden" onclick="event.stopPropagation()">
+        <h3 class="text-sm font-black text-slate-800 mb-2 text-center uppercase tracking-widest text-[#0D9488]" data-i18n="confirm_title">Authorization Request</h3>
+        <p id="custom-confirm-message" class="text-xs text-center text-slate-500 mb-6 leading-relaxed font-semibold" data-i18n="confirm_msg">Confirm risky administrative execution commands patterns?</p>
+        <div class="flex gap-2">
+            <button id="custom-confirm-yes" class="flex-1 py-3 bg-red-500 text-white rounded-xl text-xs font-black shadow-md uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="confirm_btn_yes">Confirm Route</button>
+            <button onclick="closeConfirmModal()" class="flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold uppercase tracking-wide border-none outline-none cursor-pointer" data-i18n="confirm_btn_cancel">Cancel Run</button>
+        </div>
+    </div>
+    
+    <div id="item-context-menu" class="dropdown-menu !fixed !z-[9999] shadow-2xl border-slate-200 overflow-hidden w-48" style="display: none;">
+        <div class="dropdown-item flex items-center gap-3" onclick="handleCtxAction('edit')">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+            <span data-i18n="ctx_edit">Edit Item</span>
+        </div>
+        <div class="dropdown-item flex items-center gap-3" onclick="handleCtxAction('copy-u')">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span data-i18n="ctx_copy_user">Copy Username</span>
+        </div>
+        <div class="dropdown-item flex items-center gap-3" onclick="handleCtxAction('copy-p')">
+            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+            <span data-i18n="ctx_copy_pass">Copy Password</span>
+        </div>
+        <div class="h-px bg-slate-100 my-1"></div>
+        <div class="dropdown-item flex items-center gap-3" onclick="handleCtxAction('fav')">
+            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span data-i18n="ctx_fav">Toggle Favorite</span>
+        </div>
+        <div class="dropdown-item flex items-center gap-3" onclick="handleCtxAction('arch')">
+            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
+            <span data-i18n="ctx_arch">Archive / Restore</span>
+        </div>
+        <div class="dropdown-item flex items-center gap-3 text-red-500 hover:!bg-red-50 hover:!text-red-600" onclick="handleCtxAction('trash')">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+            <span data-i18n="ctx_trash">Trash Item</span>
+        </div>
+    </div>
+    
+    <div id="health-check-modal" class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-3xl p-6 shadow-2xl z-[500] border border-slate-100 flex flex-col">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-full flex items-center justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                    <h3 class="font-black text-slate-700 text-sm tracking-wider uppercase" data-i18n="health_title">Vault Health Report</h3>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest" data-i18n="health_sub">Security Analysis</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="health-score-container" class="mb-5 flex flex-col items-center justify-center py-4 rounded-2xl border transition-colors">
+            <div class="text-4xl font-black" id="health-score-text">--%</div>
+            <div class="text-[10px] font-bold uppercase tracking-widest mt-1" id="health-score-label" data-i18n="health_calc">Calculating...</div>
+        </div>
+
+        <div id="health-details" class="flex flex-col gap-3 max-h-60 overflow-y-auto pr-1 custom-scrollbar"></div>
+        
+        <button onclick="closeHealthModal()" class="mt-6 w-full py-3.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[11px] font-black shadow-md uppercase tracking-wider transition-all border-none cursor-pointer" data-i18n="health_close">
+            Close Report
+        </button>
+    </div>
+<!------------STR GET DATA FROM PC-------------------------------------------------->
+    <div id="cable-sync-actions-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-[300] flex items-center justify-center p-4 hidden">
+    <div class="bg-white p-7 rounded-[36px] shadow-2xl w-full max-w-[320px] text-center border-2 border-teal-200">
+        <h2 class="text-lg font-black text-slate-800 uppercase tracking-wider mb-2" data-i18n="usb_title">USB Tethering Sync</h2>
+        <p class="text-[10px] text-slate-500 font-bold mb-6" data-i18n="usb_msg">Connection Established! Choose sync direction.</p>
+        
+        <div class="space-y-3">
+            <!-- 🟢 دکمه دریافت اطلاعات (اصلاح شده) -->
+            <button onclick="pullDatabaseFromPC()" type="button" class="w-full flex items-center justify-center gap-2 bg-[#0D9488] hover:bg-[#0f766e] text-white font-black py-3.5 rounded-xl transition-all text-xs uppercase tracking-widest shadow-md border-none outline-none cursor-pointer">
+                <!-- اضافه شدن کلاس pointer-events-none به عناصر داخلی دکمه -->
+                <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
+                <span class="pointer-events-none" data-i18n="usb_btn_pull">Get Data From PC</span>
+            </button>
+
+            <!-- 🟢 دکمه ارسال اطلاعات (اصلاح شده برای همگام‌سازی کامل) -->
+            <button onclick="pushDatabaseToPC()" type="button" class="w-full flex items-center justify-center gap-2 bg-teal-50 hover:bg-teal-100 text-[#0D9488] font-black py-3.5 rounded-xl border border-teal-200 transition-all text-xs uppercase tracking-widest shadow-sm border-none outline-none cursor-pointer">
+                <!-- اضافه شدن کلاس pointer-events-none به عناصر داخلی دکمه -->
+                <svg class="w-5 h-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                <span class="pointer-events-none" data-i18n="usb_btn_push">Send Data To PC</span>
+            </button>
+        </div>
+        
+        <div class="mt-5 border-t border-slate-100 pt-4">
+            <button onclick="closeCableSyncModal()" class="text-xs text-red-500 font-bold uppercase tracking-widest hover:underline border-none bg-transparent outline-none cursor-pointer" data-i18n="usb_btn_cancel">Cancel &amp; Disconnect</button>
+        </div>
+    </div>
+</div>
+<!------------End GET DATA FROM PC-------------------------------------------------->
+    <div id="vns-custom-alert" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-6 w-10/12 max-w-sm shadow-2xl transform scale-95 transition-transform duration-300" id="vns-alert-box">
+            <div id="vns-alert-icon" class="text-5xl mb-4 text-center drop-shadow-md">✅</div>
+            <h3 id="vns-alert-title" data-i18n="alert_default_title" class="text-lg font-black text-center text-slate-800 mb-2 tracking-wide"><span datan="m_html_tile">Title</span></h3>
+            <p id="vns-alert-message" data-i18n="alert_default_message" class="text-xs font-bold text-center text-slate-500 mb-6 leading-relaxed"><span datan="m_html_message_goes_here">Message goes here...</span></p>
+            <button onclick="closeVnsAlert()" data-i18n="alert_btn_confirm" class="w-full py-3 bg-[#0D9488] hover:bg-[#0f766e] text-white rounded-xl text-[11px] font-black shadow-md uppercase tracking-wider transition-all cursor-pointer">
+                <span data-i18n="m_html_got_it">Got it!</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Hidden Inputs and Scripts -->
+    <input type="file" id="restore-file-input" accept=".json" style="display: none;">
+    
+<main id="m-ids-main-container" class="fixed inset-0 bg-slate-50 z-[200] hidden flex-col w-full h-full overflow-hidden">
+    <div class="w-full p-4 bg-white border-b border-slate-200 flex items-center justify-between shrink-0 z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-cyan-50 flex items-center justify-center text-cyan-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
+            </div>
+            <h2 class="font-black text-sm text-slate-800 uppercase tracking-wider"><span data-i18n="html_lbl_id_registry">ID &amp;amp; Passport</span></h2>
+        </div>
+        <button type="button" onclick="mExitIdsModuleMatrix()" class="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-500 rounded-xl border-none cursor-pointer">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+    <div class="flex-1 flex flex-col w-full overflow-hidden min-h-0">
+        <div class="w-full p-3 shrink-0">
+            <button type="button" onclick="mOpenNewIdDocForm()" class="w-full py-4 border-2 border-dashed border-cyan-500 text-cyan-800 bg-cyan-50/50 rounded-2xl font-black text-xs uppercase tracking-wider flex flex-col items-center gap-2 cursor-pointer outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                <span data-i18n="add_new_id_pass">Add New ID / Passport</span>
+            </button>
+        </div>
+        <div id="m-id-items-container" class="flex-1 overflow-y-auto px-3 pb-24"></div>
+    </div>
+    <div id="m-id-form-screen" class="hidden flex-col p-4 overflow-y-auto">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3 shrink-0">
+            <h2 id="m-id-form-title" class="text-sm font-black text-slate-700 uppercase tracking-wider"><span data-i18n="m_html_add_doc">Add Document</span></h2>
+            <button type="button" onclick="mCloseIdScreens()" class="p-2 text-slate-400 bg-slate-100 rounded-xl border-none cursor-pointer"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="flex-1 space-y-3 pb-4">
+            <div class="grid grid-cols-3 gap-2">
+                <div><label class="m-id-lbl"><span data-i18n="m_html_type">Type</span></label><select id="m-id-input-type" class="m-id-field"><option value="passport"><span data-i18n="m_html_passport">Passport</span></option><option value="national_id"><span data-i18n="m_html_nat_id">National ID</span></option><option value="residence"><span data-i18n="m_html_residence">Residence</span></option><option value="driver"><span data-i18n="m_html_drv_license">Driver License</span></option><option value="other"><span data-i18n="m_html_other">Other</span></option></select></div>
+                <div class="col-span-2">
+    <label class="m-id-lbl">
+        <span data-i18n="m_html_document_number">Document number</span>
+    </label>
+   <input type="text" id="m-id-input-number" dir="ltr" class="m-id-field"
+       data-i18n="m_html_ph_doc_number"
+       placeholder="Passport / ID number">
+</div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div><label class="m-id-lbl"><span data-i18n="m_html_first_name">First name</span></label><input type="text" id="m-id-input-first" dir="auto" class="m-id-field"></div>
+                <div><label class="m-id-lbl"><span data-i18n="m_html_last_name">Last name</span></label><input type="text" id="m-id-input-last" dir="auto" class="m-id-field"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div><label class="m-id-lbl"><span data-i18n="m_html_father_name">Father name</span></label><input type="text" id="m-id-input-father" dir="auto" class="m-id-field" 
+       data-i18n="m_html_optional"
+       placeholder="Optional"></div>
+                <div><label class="m-id-lbl"><span data-i18n="m_html_nationality">Nationality</span></label><input type="text" id="m-id-input-nationality" dir="auto" class="m-id-field"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2">
+                <div><label class="m-id-lbl"><span data-i18n="m_html_birth">Birth</span></label><input type="text" id="m-id-input-birth" dir="ltr" class="m-id-field" placeholder="YYYY/MM/DD"></div>
+                <div><label class="m-id-lbl"><span data-i18n="m_html_isused">Issued</span></label><input type="text" id="m-id-input-issue" dir="ltr" class="m-id-field" placeholder="YYYY/MM/DD"></div>
+                <div><label class="m-id-lbl"><span data-i18n="m_html_expires">Expires</span></label><input type="text" id="m-id-input-expiry" dir="ltr" class="m-id-field" placeholder="YYYY/MM/DD"></div>
+            </div>
+            <div><label class="m-id-lbl"><span data-i18n="m_html_place_of_issue">Place of issue</span></label><input type="text" id="m-id-input-place" dir="auto" class="m-id-field"></div>
+            <div><label class="m-id-lbl"><span data-i18n="m_html_notes">Notes</span></label><textarea id="m-id-input-notes" dir="auto" class="m-id-field" rows="2"></textarea></div>
+            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3 space-y-2">
+                <div class="text-[10px] font-black text-slate-500 uppercase"><span data-i18n="m_html_doc_photo">Document photo (optional)</span></div>
+                <div class="flex items-center gap-3 flex-wrap">
+                    <img id="m-id-photo-preview" class="hidden m-id-photo-thumb" alt="Photo">
+                    <input type="hidden" id="m-id-photo-data" value="">
+                    <label class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase cursor-pointer"><span data-i18n="m_html_upload">Upload</span><input type="file" id="m-id-photo-file" accept="image/*" class="hidden" onchange="mPreviewIdPhoto(this,'photo')"></label>
+                    <button type="button" onclick="mClearIdPhoto()" class="px-3 py-2 bg-slate-100 rounded-xl text-[10px] font-bold border-none cursor-pointer"><span data-i18n="m_html_remove">Remove</span></button>
+                </div>
+            </div>
+            <!-- LOGO top-left -->
+            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-3 space-y-2">
+                <div class="text-[10px] font-black text-slate-500 uppercase"><span data-i18n="m_html_doc_logo">Document / Flag logo (top-left)</span></div>
+                <div class="flex items-center gap-3 flex-wrap">
+                    <img id="m-id-logo-preview" class="hidden m-id-logo-thumb" alt="Logo">
+                    <input type="hidden" id="m-id-logo-data" value="">
+                    <label class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase cursor-pointer"><span data-i18n="m_html_upload_logo">Upload logo</span><input type="file" id="m-id-logo-file" accept="image/*" class="hidden" onchange="mPreviewIdPhoto(this,'logo')"></label>
+                    <button type="button" onclick="mClearIdLogo()" class="px-3 py-2 bg-slate-100 rounded-xl text-[10px] font-bold border-none cursor-pointer"><span data-i18n="m_html_remove">Remove</span></button>
+                </div>
+            </div>
+            <!-- BACKGROUND: theme / solid / gradient / image -->
+            <div class="rounded-2xl border border-cyan-100 bg-cyan-50/50 p-3 space-y-2">
+                <div class="text-[10px] font-black text-cyan-800 uppercase"><span data-i18n="m_html_bg_style">Card background style</span></div>
+                <select id="m-id-input-bg-mode" class="m-id-field" onchange="mOnIdBgModeChange()">
+                    <option value="theme">Default by document type</option>
+                    <option value="solid">Solid color</option>
+                    <option value="gradient">Gradient (2 colors)</option>
+                    <option value="image">Custom image</option>
+                </select>
+                <div id="m-id-bg-colors-wrap" class="hidden space-y-2">
+                    <div class="m-id-color-row">
+                        <label class="text-[10px] font-bold text-slate-600">Color 1</label>
+                        <input type="color" id="m-id-input-bg-c1" value="#1e3a5f">
+                        <label class="text-[10px] font-bold text-slate-600" id="m-id-bg-c2-lbl">Color 2</label>
+                        <input type="color" id="m-id-input-bg-c2" value="#0f172a">
+                    </div>
+                    <p class="m-id-bg-mode-hint">Solid uses Color 1 only. Gradient blends Color 1 → Color 2.</p>
+                </div>
+                <div id="m-id-bg-image-wrap" class="hidden">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <img id="m-id-bg-preview" class="hidden m-id-bg-thumb" alt="Background">
+                        <input type="hidden" id="m-id-bg-data" value="">
+                        <label class="px-3 py-2 bg-white border border-cyan-200 rounded-xl text-[10px] font-black uppercase text-cyan-800 cursor-pointer"><span data-i18n="m_html_upload_background">Upload background</span><input type="file" id="m-id-bg-file" accept="image/*" class="hidden" onchange="mPreviewIdPhoto(this,'bg')"></label>
+                        <button type="button" onclick="mClearIdBg()" class="px-3 py-2 bg-slate-100 rounded-xl text-[10px] font-bold border-none cursor-pointer"><span data-i18n="m_html_remove">Remove</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row gap-2 pt-3 border-t border-slate-100 shrink-0 pb-4">
+            <button type="button" onclick="mCommitIdDocSave()" class="flex-1 py-3.5 bg-[#0D9488] text-white rounded-xl font-black text-[11px] uppercase border-none cursor-pointer"><span data-i18n="m_html_save">Save</span></button>
+            <button type="button" onclick="mCloseIdScreens()" class="flex-1 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer"><span data-i18n="m_html_cancel">Cancel</span></button>
+            <button type="button" id="m-id-btn-form-trash" onclick="mTrashCurrentIdForm()" class="px-4 py-3.5 bg-red-50 text-red-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer hidden"><span data-i18n="m_html_trash">Trash</span></button>
+        </div>
+    </div>
+    <div id="m-id-view-screen" class="hidden flex-col p-4 overflow-y-auto">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+            <h2 class="text-sm font-black text-slate-700 uppercase tracking-wider"><span data-i18n="m_html_doc_details">Document Details</span></h2>
+            <button type="button" onclick="mCloseIdScreens()" class="p-2 text-slate-400 bg-slate-100 rounded-xl border-none cursor-pointer"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="space-y-3 text-sm font-bold text-slate-700 pb-6">
+            <img id="m-id-view-photo" class="hidden m-id-photo-thumb cursor-pointer mb-2" alt="Photo">
+            <div><span class="m-id-lbl" data-i18n="m_html_type">Type</span><div id="m-id-view-type">—</div></div>
+            <div><span class="m-id-lbl" data-i18n="m_html_number">Number</span><div id="m-id-view-number" class="font-mono">—</div></div>
+            <div><span class="m-id-lbl" data-i18n="m_html_name">Name</span><div id="m-id-view-name">—</div></div>
+            <div><span class="m-id-lbl" data-i18n="m_html_father_name">Father name</span><div id="m-id-view-father">—</div></div>
+            <div><span class="m-id-lbl" data-i18n="m_html_nationality">Nationality</span><div id="m-id-view-nationality">—</div></div>
+            <div class="grid grid-cols-3 gap-2">
+                <div><span class="m-id-lbl" data-i18n="m_html_birth">Birth</span><div id="m-id-view-birth">—</div></div>
+                <div><span class="m-id-lbl" data-i18n="m_html_issued">Issued</span><div id="m-id-view-issue">—</div></div>
+                <div><span class="m-id-lbl" data-i18n="m_html_expires">Expires</span><div id="m-id-view-expiry">—</div></div>
+            </div>
+            <div><span class="m-id-lbl" data-i18n="m_html_place_of_issue">Place of issue</span><div id="m-id-view-place">—</div></div>
+            <div><span class="m-id-lbl" data-i18n="m_html_">Notes</span><div id="m-id-view-notes">—</div></div>
+        </div>
+        <div class="flex gap-2 pt-3 border-t border-slate-100">
+            <button type="button" onclick="mOpenIdDocForm(mActiveIdDocId)" class="flex-1 py-3.5 bg-teal-600 text-white rounded-xl font-black text-[11px] uppercase border-none cursor-pointer"><span data-i18n="m_html_edit">Edit</span></button>
+            <button type="button" onclick="mCloseIdScreens()" class="flex-1 py-3.5 bg-slate-100 text-slate-600 rounded-xl font-bold text-[11px] uppercase border-none cursor-pointer"><span data-i18n="m_html_close">Close</span></button>
+        </div>
+    </div>
+</main>
+
+    <link rel="stylesheet" href="m-card.css">
+    <link rel="stylesheet" href="m-id.css">
+    <script src="feature-flags.js"></script>
+<script src="lang-core.js"></script>
+    <script src="lang/en.js"></script>
+    <script src="lang/fa.js"></script>
+    <script src="lang/ar.js"></script>
+    <script src="lang/cn.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script src="html5-qrcode.min.js"></script>
+    <script src="totp-engine.js?v=1.0"></script>
+    <script src="mnemonic-engine.js?v=1.0"></script>
+    <script src="privacy-consent.js?v=1.0"></script>
+    <script src="app.js?v=1.4"></script>
+    <script src="m-share.js?v=1.2"></script>
+    <script src="m-card.js?v=1.3"></script>
+    <script src="m-id.js?v=1.0"></script>
+    
+</body>
+</html>

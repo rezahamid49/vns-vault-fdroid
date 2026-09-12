@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- رنگ روشن = همان پس‌زمینه auth / body تا سیاهی دیده نشود -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#0D9488</item>
+        <item name="colorPrimaryDark">#0f766e</item>
+        <item name="colorAccent">#0D9488</item>
+
+        <item name="android:windowBackground">#C7F3EF</item>
+        <item name="android:colorBackground">#C7F3EF</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowSplashScreenBackground">#C7F3EF</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">#C7F3EF</item>
+        <item name="android:colorBackground">#C7F3EF</item>
+        <item name="android:windowSplashScreenBackground">#C7F3EF</item>
+    </style>
+
+    <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">#C7F3EF</item>
+        <item name="android:windowSplashScreenBackground">#C7F3EF</item>
+    </style>
+</resources>

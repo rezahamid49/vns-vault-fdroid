@@ -1,0 +1,404 @@
+@charset "utf-8";
+/* ==========================================================================
+   VNS SECURE VAULT - ISOLATED MOBILE CARDS STYLING MATRIX (m-card.css)
+   ========================================================================== */
+
+#m-cards-main-container {
+    background-color: rgba(13,148,136,0.08);
+    height: 100vh !important;
+    max-height: 100vh !important;
+}
+
+#m-card-form-screen, 
+#m-card-view-screen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    background-color: #f9fdfd !important;   /*background add new payment card page */
+    z-index: 99999 !important;
+    display: none;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+}
+
+#m-card-form-screen:not(.hidden), 
+#m-card-view-screen:not(.hidden) {
+    display: flex !important;
+}
+
+.m-mobile-graphic-card {
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+.m-mobile-graphic-card:active {
+    transform: scale(0.98);
+}
+
+/* --- IRANIAN BANKS --- */
+.card-mellat { background: linear-gradient(135deg, #b49f7f, #8a0d1d) !important; }
+.card-melli { background: linear-gradient(135deg, #E8CF90, #D8B374) !important; }
+.card-tejarat { background: linear-gradient(135deg, #B3C4CB, #DDE4E8) !important; }
+.card-saderat { background: linear-gradient(135deg, #B3C4CB, #1e1b4b) !important; }
+.card-pasargad { background: linear-gradient(135deg, #000000, #787878) !important; }
+.card-saman { background: linear-gradient(100deg, #0284c7, #1e3a8a) !important; }
+.card-enbank { background: linear-gradient(135deg, #B24BB9, #AA3FAE) !important; }
+.card-maskan { background: linear-gradient(180deg, #D3652A, #E1E1E1) !important; }
+.card-sepah { background: linear-gradient(135deg, #a16207, #E7A634) !important; }
+.card-refah { background: linear-gradient(135deg, #B4B2B3, #88747E) !important; }
+.card-keshavarzi { background: linear-gradient(135deg, #7EBC43, #9DCE6F) !important; }
+.card-parsian { background: linear-gradient(180deg, #DEDEDE, #C47822) !important; }
+.card-day { background: linear-gradient(135deg, #1EA6C6, #7DC9DD) !important; }
+.card-sarmayeh { background: linear-gradient(135deg, #705D9B, #C2B1D0) !important; }
+.card-ansar { background: linear-gradient(135deg, #A3802B, #926714) !important; }
+.card-sina { background: linear-gradient(135deg, #D3AD2E, #D3AD2E) !important; }
+.card-sanatmadan { background: linear-gradient(135deg, #AC8B40, #AC8B40) !important; }
+.card-shahr { background: linear-gradient(135deg, #CC2F43, #881826) !important; }
+.card-karafarin { background: linear-gradient(90deg, #4D0267, #C9C7C8) !important; }
+.card-gardeshgari { background: linear-gradient(135deg, #E8E8E8, #810507) !important; }
+.card-iranzamin { background: linear-gradient(135deg, #B29EE8, #E4DFEB) !important; }
+.card-taavon { background: linear-gradient(180deg, #075D8F, #95BAB9) !important; }
+.card-toseesaderat { background: linear-gradient(135deg, #1E7AB1, #B2C8D5) !important; }
+
+/* --- CHINESE BANKS --- */
+.card-abc { background: linear-gradient(135deg, #799448, #284A2F) !important; }
+.card-boc { background: linear-gradient(180deg, #77ACB6, #E9E8E4) !important; }
+.card-citic { background: linear-gradient(135deg, #5C5B57, #8F8D89) !important; }
+.card-cons { background: linear-gradient(90deg, #F3F3F5, #405F86) !important; }
+.card-merch { background: linear-gradient(135deg, #876646, #A16D3A) !important; }
+.card-icbc { background: linear-gradient(135deg, #C6AC35, #C6AC35) !important; }
+.card-spd { background: linear-gradient(135deg, #C02F2C, #891A18) !important; }
+.card-cmi { background: linear-gradient(135deg, #C1AC2E, #784D04) !important; }
+
+/* --- UAE BANKS --- */
+.card-mashreq { background: linear-gradient(135deg, #ff5000, #191919) !important; }
+.card-fab { background: linear-gradient(135deg, #092147, #0f3460) !important; }
+.card-adcb { background: linear-gradient(135deg, #e31b23, #1c1917) !important; }
+.card-dib { background: linear-gradient(135deg, #005a36, #cca43b) !important; }
+.card-adib { background: linear-gradient(135deg, #004b87, #bfa15f) !important; }
+.card-reem { background: linear-gradient(135deg, #7c2d12, #44403c) !important; }
+
+/* ==========================================================================
+   PURE CSS INTERNATIONAL CARDS (VISA, MASTERCARD, UNIONPAY)
+   ========================================================================== */
+
+/* ?? 1. VISA CARD (????? ???? ?? ???? ????) */
+.card-visa { 
+    background: linear-gradient(145deg, #3b0a0a 0%, #5c1212 40%, #7a1a1a 70%, #3b0a0a 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+.card-visa::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    top: -90px;
+    right: -70px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.visa-logo-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 2px;
+    font-style: italic;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* ?? 2. MASTERCARD (???????? / ???? ???? ?? ?? ????? ????????) */
+.card-mastercard { 
+    background: linear-gradient(145deg, #1b2838 0%, #0f1c2e 40%, #162433 70%, #0d1620 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+.mastercard-logo-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mastercard-circles {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    direction: ltr;
+}
+.mastercard-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+}
+.mastercard-circle.red-1 { background: #eb001b; left: 0; z-index: 1; }
+.mastercard-circle.yellow { background: #f79e1b; left: 18px; z-index: 2; }
+.mastercard-circle.red-2 { background: #eb001b; left: 0; opacity: 0.5; z-index: 3; }
+.mastercard-logo-text {
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: lowercase;
+}
+
+/* ?? 3. UNIONPAY (??? ?????? ?? ????? ? ??? ???????) */
+.card-unionpay { 
+    background: linear-gradient(145deg, #062820 0%, #043d2f 40%, #0a4f3c 70%, #031f18 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+.card-unionpay::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
+    top: -90px;
+    right: -70px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.unionpay-logo-box {
+    position: relative;
+    width: 85px;
+    height: 38px;
+    direction: ltr;
+}
+.up-shape {
+    position: absolute;
+    top: 0;
+    height: 38px;
+    border-radius: 7px;
+    transform: skewX(-12deg);
+}
+.up-red { width: 38px; background: #e21836; left: 0; z-index: 1; }
+.up-blue { width: 38px; background: #00447c; left: 8px; z-index: 2; }
+.up-teal { width: 38px; background: #00a0a0; left: 18px; z-index: 3; }
+.unionpay-logo-text {
+    position: absolute;
+    top: 50%;
+    left: 38%;
+    transform: translate(-50%, -50%) skewX(-12deg);
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.3px;
+    z-index: 10;
+    white-space: nowrap;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* --- OTHER GLOBAL CARDS --- */
+.card-amex { background: linear-gradient(135deg, #007bc1, #00a3e0) !important; }
+.card-greendot { background: linear-gradient(135deg, #16a34a, #064e3b) !important; }
+.card-walmart { background: linear-gradient(135deg, #0071CE, #004c91) !important; }
+.card-netspend { background: linear-gradient(135deg, #002D62, #00A3E0) !important; }
+.card-chase { background: linear-gradient(135deg, #117ACA, #0B2347) !important; }
+.card-boa { background: linear-gradient(135deg, #003E7E, #E51937) !important; }
+.card-hsbc { background: linear-gradient(135deg, #b91c1c, #7f1d1d) !important; }
+.card-citi { background: linear-gradient(135deg, #003B70, #71B32A) !important; }
+.card-generic { background: linear-gradient(135deg, #475569, #1e293b) !important; }
+
+/* ?? ?????? */
+.m-card-field-input[readonly] {
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+    border-color: #cbd5e1 !important;
+    cursor: not-allowed !important;
+}
+
+.m-card-field-input:not([readonly]) {
+    background-color: rgba(13, 148, 136, 0.06) !important;
+    border-color: rgba(13, 148, 136, 0.3) !important;
+    color: #0f172a !important;
+}
+
+/* ?? ?????? ??????? ????????? ? ??? ???? ???? ????? (??? ????? ? ???? ???) */
+.cardItem, 
+div[class*="shadow-lg rounded-[18px]"] {
+    background: transparent !important;
+    border-radius: 18px !important;
+    overflow: hidden !important;
+}
+
+.m-card-node {
+    border-top-left-radius: 18px !important;
+    border-top-right-radius: 18px !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    overflow: hidden !important;
+}
+
+.m-card-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    position: relative;
+    z-index: 0;
+    background: rgba(13, 148, 136, 1.0) !important;
+    backdrop-filter: blur(12px) !important;
+    border-top: none !important;
+    border-bottom-left-radius: 18px !important;
+    border-bottom-right-radius: 18px !important;
+}
+
+/* ???????? ???? ??? */
+.m-card-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.m-btn-reveal, .m-btn-copy, .m-btn-edit {
+    color: rgba(44,40,40,1.00) !important;
+}
+
+.m-btn-reveal:hover, .m-btn-copy:hover, .m-btn-edit:hover {
+    color: #ffffff !important; 
+    transform: scale(1.1); 
+}
+
+.m-btn-delete {
+    color: #f87171 !important;
+}
+
+.m-btn-delete:hover {
+    color: #f87171 !important;
+    transform: scale(1.1);
+}
+
+.m-btn-reveal.text-teal-400 {
+    color: #2dd4bf !important;
+}
+
+/* ?????? ??? ? ????? ??????? */
+#m-cards-scroller::-webkit-scrollbar { width: 4px; }
+#m-cards-scroller::-webkit-scrollbar-track { background: transparent; }
+#m-cards-scroller::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+#m-cards-module-root { display: none; }
+#m-cards-module-root:not(.hidden) { display: flex !important; }
+#m-cards-module-root { height: 100vh !important; display: flex !important; flex-direction: column; }
+#m-cards-scroller { flex: 1; overflow-y: auto; width: 100%; height: 100%; }
+
+.m-bank-logo {
+    margin-top: 10px;
+    height: 50px !important;
+    max-width: 100px !important;
+}
+
+.m-card-pin-indicator {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    padding: 4px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.m-card-node, 
+.m-card-number-display,
+.m-card-fields-container input,
+#m-input-number, #m-view-number,
+#m-input-date, #m-view-date,
+#m-input-iban, #m-view-iban,
+#m-input-cvv, #m-view-cvv {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: isolate !important;
+    writing-mode: horizontal-tb !important;
+}
+
+/* ???? ????? ??????? ????? ????? ???????? ???? */
+.m-bank-logo-chinese {
+    margin-top: -3px !important;       /* ????? ????? ?? ???? */
+    height: 90px !important;          /* ?????? ???? (??????? ???) */
+    max-width: 140px !important;      /* ?????? ??? ???? */
+    object-fit: contain !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* ?? ????? ?????? ???????? ???? ???? ??????? */
+#m-cards-main-container,
+#m-cards-scroller,
+#m-card-items-container,
+#m-cards-module-root,
+#m-cards-list-view {
+background-color: #f0fdfa !important;
+}
+
+/* User custom card colors (inline style provides the actual gradient/solid) */
+.card-custom-user {
+    background-color: #0f172a !important;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* Visibility fix: avoid transparent empty-looking cards screen */
+#m-cards-main-container {
+    background-color: #f0fdfa !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+#m-cards-list-view {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    opacity: 1 !important;
+}
+#m-card-items-container {
+    flex: 1 1 auto !important;
+    min-height: 180px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    opacity: 1 !important;
+}
+.m-card-node {
+    opacity: 1 !important;
+    min-height: 160px;
+}
+
+.m-card-select-wrap {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 30;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.m-card-outer.card-selected { outline: 2px solid #0D9488; outline-offset: 2px; }
+.m-bulk-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 8px 12px; padding: 10px 12px; background: #0f766e; color: #fff;
+  border-radius: 14px;
+}
+.m-bulk-bar.hidden { display: none !important; }
+.m-bulk-btn { border: none; border-radius: 10px; padding: 8px 12px; font-size: 10px; font-weight: 900; cursor: pointer; }
+.m-bulk-btn.cancel { background: rgba(255,255,255,0.2); color: #fff; }
+.m-bulk-btn.delete { background: #fee2e2; color: #b91c1c; }
