@@ -1,0 +1,16 @@
+VNS Vault is a fully offline password manager for Android.
+
+It stores your passwords, payment cards, identity documents and TOTP codes securely on your device using AES-GCM encryption. The app has no internet permission and never sends any data outside your device.
+
+Features:
+• Fully offline (no internet permission)
+• Strong encryption (AES-GCM + PBKDF2)
+• Biometric unlock (Fingerprint / Face)
+• TOTP / 2FA authenticator
+• Payment cards storage
+• ID & Passport documents storage
+• Android Autofill support
+• Credential Provider support
+• Multi-language support
+
+Your data stays only on your device.
